@@ -109,7 +109,7 @@ export default () => {
     return (
       <Container className={classes.form}>
         <Row center>
-          <Col md="2">
+          <Col xs="2">
             <img src={require('../../assets/images/cora-logo.png')} className={`img-fluid ${classes.coralogo}`}></img>
           </Col>
         </Row>

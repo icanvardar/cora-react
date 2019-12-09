@@ -10,7 +10,7 @@ export default () => {
         <div className="page">
             <Container className={classes.container}>
                 <Row center>
-                    <Col md="2">
+                    <Col xs="2">
                         <img src={require('../../assets/images/cora-logo.png')} className={`img-fluid ${classes.coralogo}`}></img>
                     </Col>
                 </Row>
