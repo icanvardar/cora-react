@@ -7,6 +7,8 @@ import {registerUser} from '../../utils/apiRequests/user';
 
 import {dateFormatter} from '../../helper/dateFormatter';
 
+import { withStyles } from '@material-ui/core/styles';
+import { blue, red } from '@material-ui/core/colors';
 import {Radio, Checkbox, FormControlLabel} from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import DateFnsUtils from '@date-io/date-fns';
@@ -17,6 +19,26 @@ import {
 
 import {Link} from 'react-router-dom';
 import { MDBContainer as Container, MDBRow as Row, MDBCol as Col, MDBBtn as Btn, MDBInput as Input, MDBCard as Card, MDBCardBody as CardBody, MDBAlert as Alert } from 'mdbreact';
+
+const BlueRadio = withStyles({
+  root: {
+    color: blue[400],
+    '&$checked': {
+      color: blue[600],
+    },
+  },
+  checked: {},
+})(props => <Radio color="default" {...props} />);
+
+const RedCheckbox = withStyles({
+  root: {
+    color: red[400],
+    '&$checked': {
+      color: red[600],
+    },
+  },
+  checked: {},
+})(props => <Checkbox color="default" {...props} />);
 
 export default () => {
     const [name, setName] = useState('');
@@ -87,13 +109,13 @@ export default () => {
     return (
       <Container className={classes.form}>
         <Row center>
-          <Col md="4">
+          <Col md="2">
             <img src={require('../../assets/images/cora-logo.png')} className={`img-fluid ${classes.coralogo}`}></img>
           </Col>
         </Row>
         <Row center>
           <Col md="6">
-            <Card color="elegant-color-dark">
+            <Card color="black">
               <CardBody>
                 <form onSubmit={submit}>
                   <h3 className={classes.stepheading}>Kişisel Bilgiler</h3>
@@ -117,21 +139,21 @@ export default () => {
                       onChange={e => setSurname(e.target.value)}
                     />
                     <span>Cinsiyet:</span>
-                    <Radio
+                    <BlueRadio
                         checked={gender === 'E'}
                         value="E"
                         color="primary"
                         onChange={() => setGender('E')}
                     />
                     <span className={classes.radiotext}>Erkek</span>
-                    <Radio
+                    <BlueRadio
                         checked={gender === 'K'}
                         value="K"
                         color="primary"
                         onChange={() => setGender('K')}
                     />
                     <span className={classes.radiotext}>Kadın</span>
-                    <Radio
+                    <BlueRadio
                         checked={gender === 'D'}
                         value="D"
                         color="primary"
@@ -144,26 +166,27 @@ export default () => {
                         <div className={classes.datepickerdiv}>
                             <span>Doğum Tarihi:</span>
                             <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                            <Grid container justify="start">
-                            <KeyboardDatePicker className={classes.datepicker}
-                                margin="normal"
-                                id="date-picker-dialog"
-                                format="dd/MM/yyyy"
-                                value={selectedDate}
-                                onChange={setSelectedDate}
-                                KeyboardButtonProps={{
-                                'aria-label': 'change date',
-                                }}
-                                inputVariant="outlined"
-                            />
-                            </Grid>
-                        </MuiPickersUtilsProvider>
+                              <Grid container justify="start">
+                                <KeyboardDatePicker className={classes.datepicker}
+                                    margin="normal"
+                                    id="date-picker-dialog"
+                                    format="dd/MM/yyyy"
+                                    value={selectedDate}
+                                    onChange={setSelectedDate}
+                                    KeyboardButtonProps={{
+                                    'aria-label': 'change date',
+                                    }}
+                                    color="secondary"
+                                    inputVariant="outlined"
+                                />
+                              </Grid>
+                            </MuiPickersUtilsProvider>
                         </div>
                     }
                     
                     <FormControlLabel 
                       control={
-                        <Checkbox
+                        <RedCheckbox
                         checked={dateChecked}
                         onChange={() => {
                           if (dateChecked === false) {
@@ -182,8 +205,6 @@ export default () => {
                       }
                       label="Doğum tarihimi belirtmek istemiyorum."
                     />
-
-                    
 
                     <hr />
                     <h3 className={classes.stepheading}>Kullanıcı Bilgileri</h3>

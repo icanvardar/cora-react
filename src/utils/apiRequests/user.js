@@ -6,7 +6,7 @@ export const loginUser = async (data) => {
             data
         ).then(res => {
             console.log(res);
-            // history.push('/');
+            //history.push('/');
         }).catch(err => {
             console.log(err)
         })

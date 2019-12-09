@@ -2,7 +2,7 @@
     padding-top: 20px;
 }
 
-h2 {
+.cardsheading {
     text-align: center;
     color: white;
 }
@@ -15,18 +15,27 @@ h2 {
     display: block;
 }
 
-.cardinfo1 {
+.card1info {
     padding: 10px;
     border: 2px solid #55A2C5;
     border-radius: 10px;
     text-align: center;
 }
 
-.cardinfo2 {
+.card2info {
     padding: 10px;
     border: 2px solid #8862C6;
     border-radius: 10px;
     text-align: center;
+}
+
+.card1text {
+    color: white;
+}
+
+
+.card2text {
+    color: white;
 }
 
 .card1:hover {

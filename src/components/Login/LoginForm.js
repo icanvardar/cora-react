@@ -19,13 +19,13 @@ export default () => {
     return (
       <Container className={classes.form}>
         <Row center>
-          <Col md="4">
+          <Col md="2">
             <img src={require('../../assets/images/cora-logo.png')} className={`img-fluid ${classes.coralogo}`}></img>
           </Col>
         </Row>
         <Row center>
           <Col md="6">
-            <Card color="elegant-color-dark">
+            <Card color="black">
               <CardBody>
                 <form onSubmit={submit}>
                   <div className="grey-text">
