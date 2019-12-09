@@ -1,0 +1,33 @@
+.form {
+    padding-bottom: 75px;
+}
+
+.input {
+    color: red;
+}
+
+.coralogo {
+    display: block;
+}
+
+.stepheading {
+    color: white;
+}
+
+.datepicker {
+    background-color: white;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.datepickerdiv {
+    margin-top: 20px;
+}
+
+.radiotext {
+    font-size: 12px;
+}
+
+.textinput {
+    color: white;
+}
