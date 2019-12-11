@@ -1,19 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import classes from './LoginForm.module.css';
+import { useCookies, withCookies } from 'react-cookie';
 
 import {loginUser} from '../../utils/apiRequests/user';
 
 import {Link} from 'react-router-dom';
 import { MDBContainer as Container, MDBRow as Row, MDBCol as Col, MDBBtn as Btn, MDBInput as Input, MDBCard as Card, MDBCardBody as CardBody } from 'mdbreact';
 
-export default () => {
+const LoginForm = () => {
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
+
+    const [cookies, setCookie] = useCookies();
 
     const submit = async (e) => {
         e.preventDefault();
 
-        console.log(loginUser({email, password}));
+        await loginUser({email, password}, 
+          (res) => {
+            setCookie('SESSION_ID', res.data.token, {path: '/'});
+            console.log(cookies.SESSION_ID);
+          }, 
+          (err) => {
+            console.log(err);
+        });
+        
     }
 
     return (
@@ -62,3 +73,5 @@ export default () => {
       </Container>
     );
   };
+
+export default withCookies(LoginForm);

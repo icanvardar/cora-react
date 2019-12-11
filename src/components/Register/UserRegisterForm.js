@@ -3,7 +3,7 @@ import classes from './RegisterForm.module.css';
 import axios from 'axios';
 import validator from 'validator';
 
-import {registerUser} from '../../utils/apiRequests/user';
+import {registerUser, sendVerification} from '../../utils/apiRequests/user';
 
 import {dateFormatter} from '../../helper/dateFormatter';
 
@@ -19,6 +19,7 @@ import {
 
 import {Link} from 'react-router-dom';
 import { MDBContainer as Container, MDBRow as Row, MDBCol as Col, MDBBtn as Btn, MDBInput as Input, MDBCard as Card, MDBCardBody as CardBody, MDBAlert as Alert } from 'mdbreact';
+import { history } from '../../App';
 
 const BlueRadio = withStyles({
   root: {
@@ -40,7 +41,7 @@ const RedCheckbox = withStyles({
   checked: {},
 })(props => <Checkbox color="default" {...props} />);
 
-export default () => {
+const UserRegisterForm = (props) => {
     const [name, setName] = useState('');
     const [surname, setSurname] = useState('');
     const [gender, setGender] = useState('');
@@ -93,17 +94,33 @@ export default () => {
     const submit = async (e) => {
         e.preventDefault();
         
-        console.log(registerUser({
+        const data = {
+          username,
           name,
           surname,
-          gender,
-          birthdate,
-          username,
-          password,
           email,
-          phoneNumber: '05123232222',
-          profile_photo: 'asdasdsad.com'
-        }))
+          password,
+          gender,
+          birthdate
+        }
+
+        // sendVerification(data, 
+        //   (res) => {
+        //     console.log(res);
+        //   },
+        //   (err) => {
+        //     console.log(err);
+        //   }
+        //   )
+
+        registerUser(data, 
+          (res) => {
+            history.push('/login');
+          },
+          (err) => {
+            history.push('/register(user');
+          }
+          )
     }
 
     return (
@@ -285,3 +302,5 @@ export default () => {
       </Container>
     );
   };
+
+export default UserRegisterForm;

@@ -1,29 +1,27 @@
 import React from 'react';
-
 import './App.css';
 
-import HomePage from './components/Home/HomePage';
-import LoginForm from './components/Login/LoginPage';
-import RegisterForm from './components/Register/RegisterPage';
-import ProfilePage from './components/Profile/ProfilePage';
-import SelectivePage from './components/Selective/SelectivePage';
-
-import { Router, Switch, Route, Redirect } from 'react-router-dom';
+import { Router, Switch, Route } from 'react-router-dom';
+import { CookiesProvider } from 'react-cookie';
 import createHistory from 'history/createBrowserHistory';
+
+import DefaultContainer from './containers/DefaultContainer';
+import LoginContainer from './containers/LoginContainer';
+import RegisterContainer from './containers/RegisterContainer';
 
 export const history = createHistory({forceRefresh: true});
 
-function App() {
+const App = (props) => {
   return (
-    <Router history={history}>
-      <Switch>
-        <Route path="/" exact component={() => <HomePage/>}></Route>
-        <Route path="/selective" component={() => <SelectivePage/>}></Route>
-        <Route path="/login" component={() => <LoginForm />}></Route>
-        <Route path="/register" component={() => <RegisterForm/>}></Route>
-        <Route path="/profile" component={() => <ProfilePage/>}></Route>
-      </Switch>
-    </Router>
+    <CookiesProvider>
+      <Router history={history}>
+        <Switch>
+          <Route path="/login" component={() => <LoginContainer/>}></Route>
+          <Route path="/register" component={() => <RegisterContainer/>}></Route>
+          <Route component={() => <DefaultContainer/>}></Route>
+        </Switch>
+      </Router>
+    </CookiesProvider>
   );
 }
 

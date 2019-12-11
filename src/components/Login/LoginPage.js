@@ -1,7 +1,7 @@
 import React, {useState, Fragment} from 'react';
 import LoginForm from './LoginForm';
 
-export default () => {
+const LoginPage = () => {
 
     return (
         <div className="page">
@@ -9,3 +9,5 @@ export default () => {
         </div>
     )
 }
+
+export default LoginPage;

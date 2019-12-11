@@ -7,8 +7,8 @@
     color: white;
 }
 
-.percard {
-    background-image: url('../../assets/images/per.png');
+.cardphoto {
+    display: block;
 }
 
 .coralogo {
@@ -20,6 +20,7 @@
     border: 2px solid #55A2C5;
     border-radius: 10px;
     text-align: center;
+    position: relative;
 }
 
 .card2info {
@@ -38,8 +39,18 @@
     color: white;
 }
 
+.card1 {
+    height: 500px;
+    transition: transform 2s;
+}
+
 .card1:hover {
     transform: scale(1.1);
+}
+
+.card2 {
+    height: 500px;
+    transition: transform 2s;
 }
 
 .card2:hover {
