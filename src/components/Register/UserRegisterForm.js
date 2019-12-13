@@ -288,7 +288,7 @@ const UserRegisterForm = (props) => {
                   </div>
                   
                   <div className="text-center">
-                    <Btn color="white" type="submit" style={{textTransform: 'none', width: '100%', display: 'block', width: '100%'}}>Kayıt Ol</Btn>
+                    <Btn color="white" type="submit" style={{textTransform: 'none', width: '100%', display: 'block'}}>Kayıt Ol</Btn>
                   </div>
                   <div style={{textAlign: 'center'}}>
                     <p style={{color: 'white'}}>Kaydolarak <a style={{color: '#6B84F4'}}>Gizlilik Sözleşmesi</a>'ni kabul etmiş olursun.</p>

@@ -60,7 +60,7 @@ const LoginForm = () => {
                     />
                   </div>
                   <div className="text-center">
-                    <Btn color="white" type="submit" style={{textTransform: 'none', width: '100%', display: 'block', width: '100%'}}>Giriş</Btn>
+                    <Btn color="white" type="submit" style={{textTransform: 'none', width: '100%', display: 'block'}}>Giriş</Btn>
                   </div>
                   <div style={{textAlign: 'center'}}>
                     <Link to='/register' className={classes.link}>Henüz hesabınız yok mu?</Link>
