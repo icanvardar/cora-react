@@ -1,11 +1,18 @@
-import React from 'react';
+import React, {useEffect, useContext} from 'react';
 import {Link} from 'react-router-dom';
 import classes from './SelectivePage.module.css';
 
 import {MDBContainer as Container, MDBRow as Row, MDBCol as Col,MDBCard as Card, MDBCardBody as CardBody} from 'mdbreact';
 import {history} from '../../App';
+import Context from '../../utils/Context';
 
 export default () => {
+    const {token} = useContext(Context);
+
+    useEffect(() => {
+       token && history.push('/')
+    }, [])
+
     return (
         <div className="page">
             <Container className={classes.container}>

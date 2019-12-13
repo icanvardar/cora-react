@@ -1,0 +1,21 @@
+.navbar {
+    border-bottom: 1px solid #6A86F4;
+}
+
+.navlink {
+    color: white;
+}
+
+.navbarbrand {
+    height: 40px;
+    width: auto;
+}
+
+.navlink:hover {
+    color: #bcbcbc;
+}
+
+.notifications {
+    text-align: center;
+    padding: 10px;
+}

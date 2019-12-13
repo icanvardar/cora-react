@@ -1,6 +1,5 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import classes from './RegisterForm.module.css';
-import axios from 'axios';
 import validator from 'validator';
 
 import {registerUser, sendVerification} from '../../utils/apiRequests/user';

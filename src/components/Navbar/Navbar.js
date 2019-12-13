@@ -1,74 +1,101 @@
-import React, { Component } from "react";
+import React, { useState, useContext } from "react";
+import Context from "../../utils/Context";
+
 import { MDBContainer as Container, MDBCol as Col , MDBRow as Row, MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavItem, MDBNavLink, MDBNavbarToggler, MDBCollapse, MDBDropdown,
 MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem, MDBIcon } from "mdbreact";
 import { BrowserRouter as Router, Link } from 'react-router-dom';
 
+import {history} from '../../App';
 import classes from './Navbar.module.css';
+import { withCookies, useCookies } from "react-cookie";
 
-class NavbarPage extends Component {
-state = {
-  isOpen: false
-};
+const Navbar = (props) => {
+  const {token} = useContext(Context);
+  const [cookies, setCookie, removeCookie] = useCookies();
 
-toggleCollapse = () => {
-  this.setState({ isOpen: !this.state.isOpen });
-}
+  const logOut = async () => {
+    removeCookie('SESSION_ID');
+    removeCookie('username');
+    history.push('/');
+  } 
 
-render() {
   return (
     <Router>
-      <MDBNavbar style={{borderBottom: '1px solid #6A86F4'}} color="black" dark expand="md">
+      <MDBNavbar className={classes.navbar} color="black" dark expand="md">
         <Container>   
         <MDBNavbarBrand>
             <a href="/">
-              <img style={{height: '40px', width: 'auto'}} src={require('../../assets/images/cora-logo.png')}></img>
+              <img className={classes.navbarbrand} src={require('../../assets/images/cora-logo.png')}></img>
             </a>
             </MDBNavbarBrand>
             
             
             <MDBNavbarNav right>
-            <Row>
-                  <Col size="5">
-                  <MDBNavItem>
-                    <MDBDropdown>
-                        <MDBDropdownToggle color="primary" nav>
-                            <MDBIcon icon="bell" />
-                        </MDBDropdownToggle>
-                        
-                        <MDBDropdownMenu right basic className="dropdown-default">
-                            <div style={{textAlign: 'center', padding: '10px'}}>
-                              <p>This isn't a notification!</p>
-                              <p>This isn't a notification!</p>
-                              <p>This isn't a notification!</p>
-                            </div>
-                        </MDBDropdownMenu>
-                    </MDBDropdown>
-                  </MDBNavItem>
-                  </Col>
+            { token ? 
+              <Row>
+              <Col size="6">
+              <MDBNavItem>
+                <MDBDropdown>
+                    <MDBDropdownToggle color="primary" nav>
+                        <MDBIcon icon="bell" />
+                    </MDBDropdownToggle>
+                    
+                    <MDBDropdownMenu right basic className="dropdown-default">
+                        <div className={classes.notifications}>
+                          <p>This isn't a notification!</p>
+                          <p>This isn't a notification!</p>
+                          <p>This isn't a notification!</p>
+                        </div>
+                    </MDBDropdownMenu>
+                </MDBDropdown>
+              </MDBNavItem>
+              </Col>
 
-                  <Col size="5">
-                  <MDBNavItem>
-                    <MDBDropdown>
+              <Col size="6">
+              <MDBNavItem>
+                <MDBDropdown>
 
-                        <MDBDropdownToggle color="primary" nav>
-                            <MDBIcon icon="user" />
-                        </MDBDropdownToggle>
-                        
-                        <MDBDropdownMenu right basic className="dropdown-default">
-                            <MDBDropdownItem href="#!">Profil</MDBDropdownItem>
-                            <MDBDropdownItem href="#!">Çıkış Yap</MDBDropdownItem>
-                        </MDBDropdownMenu>
-                    </MDBDropdown>
-                  </MDBNavItem>
-                  </Col>
-                  </Row>
+                    <MDBDropdownToggle color="primary" nav>
+                        <MDBIcon icon="user" />
+                    </MDBDropdownToggle>
+                    
+                    <MDBDropdownMenu right basic className="dropdown-default">
+                        <MDBDropdownItem href="/profile">Profil</MDBDropdownItem>
+                        <MDBDropdownItem onClick={() => logOut()}>Çıkış Yap</MDBDropdownItem>
+                    </MDBDropdownMenu>
+                </MDBDropdown>
+              </MDBNavItem>
+              </Col>
+              </Row> 
+              
+              : 
+              
+
+              <Row>
+              <Col size="6">
+                <MDBNavItem>
+                  <a href="/register" className={classes.navlink}>
+                    <MDBIcon icon="user-plus" />
+                  </a>
+                </MDBNavItem>
+              </Col>
+
+              <Col size="6">
+                <MDBNavItem>
+                  <a href="/login" className={classes.navlink}>
+                    <MDBIcon icon="sign-in-alt" />
+                  </a>
+                </MDBNavItem>
+              </Col>
+              </Row> 
+            }
             </MDBNavbarNav>
             
             </Container>
       </MDBNavbar>
     </Router>
     );
-  }
+  
 }
 
-export default NavbarPage;
+export default withCookies(Navbar);

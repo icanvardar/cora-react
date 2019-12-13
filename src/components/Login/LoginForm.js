@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import classes from './LoginForm.module.css';
 import { useCookies, withCookies } from 'react-cookie';
+import {history} from '../../App';
 
 import {loginUser} from '../../utils/apiRequests/user';
 
@@ -19,7 +20,8 @@ const LoginForm = () => {
         await loginUser({email, password}, 
           (res) => {
             setCookie('SESSION_ID', res.data.token, {path: '/'});
-            console.log(cookies.SESSION_ID);
+            setCookie('username', res.data.user.username, {path: '/'});
+            history.push('/');
           }, 
           (err) => {
             console.log(err);
