@@ -20,3 +20,14 @@ export const findUser = async (token, data, callback, errorcallback) => {
         errorcallback !== null && errorcallback(err)
       })
 }
+
+export const userInfToken = async (token, callback, errorcallback) => {
+
+    await axios.post(`${process.env.REACT_APP_BASE_URL}/api/usersWithToken/userinftoken`, '', setHeader(token))
+      .then(res => {
+        callback !== null && callback(res)
+      })
+      .catch(err => {
+        errorcallback !== null && errorcallback(err)
+      })
+  }
