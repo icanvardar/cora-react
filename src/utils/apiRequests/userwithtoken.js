@@ -1,18 +1,9 @@
 import axios from 'axios';
-import {history} from '../../App';
-
-// sets the header within token as x-access-token which is defined in servers
-const setHeader = (token) => (
-  {
-    headers: {
-      'x-access-token': token
-    }
-  }
-)
+import {headerSetter} from '../../helper/headerSetter';
 
 export const findUser = async (token, data, callback, errorcallback) => { 
 
-    await axios.post(`${process.env.REACT_APP_BASE_URL}/api/usersWithToken/finduser`, data, setHeader(token))
+    await axios.post(`${process.env.REACT_APP_BASE_URL}/api/usersWithToken/finduser`, data, headerSetter(token))
       .then(res => {
         callback !== null && callback(res)
       })
@@ -23,7 +14,7 @@ export const findUser = async (token, data, callback, errorcallback) => {
 
 export const userInfToken = async (token, callback, errorcallback) => {
 
-    await axios.post(`${process.env.REACT_APP_BASE_URL}/api/usersWithToken/userinftoken`, '', setHeader(token))
+    await axios.post(`${process.env.REACT_APP_BASE_URL}/api/usersWithToken/userinftoken`, '', headerSetter(token))
       .then(res => {
         callback !== null && callback(res)
       })

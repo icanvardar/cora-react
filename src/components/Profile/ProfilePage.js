@@ -2,6 +2,7 @@ import React, {useEffect, useContext, useState} from 'react';
 import { withCookies } from 'react-cookie';
 import { MDBContainer as Container, MDBRow as Row, MDBCol as Col, MDBBtn as Btn} from 'mdbreact';
 import {userInfToken} from '../../utils/apiRequests/userwithtoken';
+import {getUserData} from '../../utils/apiRequests/connectionUser/alldata';
 import Context from '../../utils/Context';
 import classes from './ProfilePage.module.css';
 
@@ -14,15 +15,25 @@ const ProfilePage = (props) => {
             (res) => {
                 const {...data} = res.data;
                 setCredentials(data);
+                console.log(res.data)
+                console.log(token)
             },
             (err) => {
                 console.log(err);
             }
         );
+
+        getUserData(token, {user_id: '5dea7ce12874672658eb82a9', paginationNumber: "0"},
+            (res) => {
+                console.log(res);
+            },
+            (err) => {
+                console.log(err);
+            }
+        )
     }, [])
 
     useEffect(() => {
-        console.log(credentials)
     }, [credentials])
 
     return (
@@ -70,7 +81,7 @@ const ProfilePage = (props) => {
                             </Row>
                             <Row center>
                                 <Col>
-                                    <Btn color="white" type="submit" style={{textTransform: 'none'}}>Profili Düzenle</Btn>
+                                    <Btn color="white" type="submit" style={{textTransform: 'none', fontWeight: 'bold'}}>Profili Düzenle</Btn>
                                 </Col>
                             </Row>
                         </div>
@@ -81,7 +92,7 @@ const ProfilePage = (props) => {
             <div className="d-lg-none">
                 <Row center className={classes.credentials}>
                     <Col>
-                        <img className={classes.profilephoto} src={`${credentials.profile_photo}`}></img>
+                        <img className={classes.profilephotomobile} src={`${credentials.profile_photo}`}></img>
                         <div>
                             <Row center style={{marginTop: '20px', fontSize: '13px'}}>
                                 <Col size="2"><img className={classes.universityphotomobile} src={`${credentials.university_photoUrl}`}></img></Col>
@@ -121,7 +132,7 @@ const ProfilePage = (props) => {
                             </Row>
                             <Row center>
                                 <Col>
-                                    <Btn color="white" type="submit" style={{textTransform: 'none', width: '100%'}}>Profili Düzenle</Btn>
+                                    <Btn color="white" size="sm" type="submit" style={{textTransform: 'none', width: '100%', fontWeight: 'bold'}}>Profili Düzenle</Btn>
                                 </Col>
                             </Row>
                         </div>
