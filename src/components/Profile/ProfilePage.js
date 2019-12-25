@@ -1,29 +1,91 @@
-import React, {useEffect, useContext, useState} from 'react';
+import React, {useEffect, useContext, useState, Fragment} from 'react';
 import { withCookies } from 'react-cookie';
 import { MDBContainer as Container, MDBRow as Row, MDBCol as Col, MDBBtn as Btn} from 'mdbreact';
-import {userInfToken} from '../../utils/apiRequests/userwithtoken';
-import {getUserData} from '../../utils/apiRequests/connectionUser/alldata';
+
+import {userInfToken, userInfSearch, findUser} from '../../utils/apiRequests/userwithtoken';
+import {getUserData, getUsers} from '../../utils/apiRequests/connectionUser/alldata';
+import {addLikes, countLikes} from '../../utils/apiRequests/connectionUser/like';
+
 import Context from '../../utils/Context';
 import classes from './ProfilePage.module.css';
+import {history} from '../../App';
 
-const ProfilePage = (props) => {
+import Credentials from './Credentials';
+import CredentialsMobile from './CredentialsMobile';
+import UserPosts from './UserPosts';
+import UserPostsMobile from './UserPostsMobile';
+
+const ProfilePage = ({match, location}) => {
     const {token} = useContext(Context);
     const [credentials, setCredentials] = useState({});
+    const [param, setParam] = useState(match.params.id);
+    const [posts, setPosts] = useState([]);
 
     useEffect(() => {
-        userInfToken(token,
+        const searchType = match.params.id;
+
+        !token && searchType === "me" && history.push('/login')
+    }, [])
+
+    useEffect(() => {
+        if (param === "me") {
+            userInfToken(token,
+                (res) => {
+                    const {...data} = res.data;
+                    setCredentials(data);
+                },
+                (err) => {
+                    console.log(err);
+                }
+            );
+        } else {
+            findUser(token, {username: param},
+                (res) => {
+                    const {...data} = res.data[0];
+                    setCredentials(data);
+                    console.log(res);
+                },
+                (err) => {
+                    console.log(err);
+                }
+            )
+        }
+    }, [])
+
+    useEffect(() => {
+        getUserData(token, {_id: credentials._id, paginationNumber: "0"},
             (res) => {
-                const {...data} = res.data;
-                setCredentials(data);
-                console.log(res.data)
-                console.log(token)
+                console.log(res.data);
+                setPosts(res.data);
             },
             (err) => {
                 console.log(err);
             }
-        );
+        )
+    }, [credentials])
 
-        getUserData(token, {user_id: '5dea7ce12874672658eb82a9', paginationNumber: "0"},
+    const editProfile = () => {
+        console.log('You just clicked edit button!');
+    }
+
+    const joinedUsers = (cep_id) => {
+        getUsers(token, {paginationNumber: "0", cep_id},
+            (res) => {
+                console.log(res.data);
+            },
+            (err) => {
+                console.log(err);
+            }
+        )
+    }
+
+    const comment = () => {
+        console.log('You clicked comment button!')
+    }
+
+    const like = (postId) => {
+        const userId = credentials._id;
+        addLikes(token, {user_id: userId, ucAlldata_id: postId},
             (res) => {
                 console.log(res);
             },
@@ -31,115 +93,37 @@ const ProfilePage = (props) => {
                 console.log(err);
             }
         )
-    }, [])
-
-    useEffect(() => {
-    }, [credentials])
+    }
 
     return (
-        <Container style={{paddingTop: '30px'}}>
-            <div className="d-none d-lg-block">
-                <Row center className={classes.credentials}>
-                    <Col>
-                        <img className={classes.profilephoto} src={`${credentials.profile_photo}`}></img>
-                        <div>
-                            <Row center style={{marginTop: '20px', fontSize: '14px'}}>
-                                <Col size="2" style={{marginLeft: '50px',marginRight: '-75px'}}><img className={classes.universityphoto} src={`${credentials.university_photoUrl}`}></img></Col>
-                                <Col size="5">
-                                    <p>{credentials.university}</p>
-                                    <p style={{marginTop: '-20px'}}>{credentials.department}</p>
-                                </Col>
-                            </Row>
-                        </div>
-                    </Col>
-                    <Col>
-                        <h2>{credentials.name + " " + credentials.surname}</h2>
-                        <div className={classes.userinfo}>
-                            <Row center>
-                                <Col>
-                                    <p>Konser</p>
-                                    <p className={classes.fixedtext}>{credentials.concert_Count}</p>
-                                </Col>
-                                <Col>
-                                    <p>Etkinlik</p>
-                                    <p className={classes.fixedtext}>{credentials.event_Count}</p>
-                                </Col>
-                                <Col>
-                                    <p>Parti</p>
-                                    <p className={classes.fixedtext}>{credentials.party_Count}</p>
-                                </Col>
-                            </Row>
-                            <Row center>
-                                <Col>
-                                    <p>Takipçi</p>
-                                    <p className={classes.fixedtext}>{credentials.follower_Count}</p>
-                                </Col>
-                                <Col>
-                                    <p>Takip</p>
-                                    <p className={classes.fixedtext}>{credentials.following_Count}</p>
-                                </Col>
-                            </Row>
-                            <Row center>
-                                <Col>
-                                    <Btn color="white" type="submit" style={{textTransform: 'none', fontWeight: 'bold'}}>Profili Düzenle</Btn>
-                                </Col>
-                            </Row>
-                        </div>
-                    </Col>
-                </Row>
-            </div>
+        <Container style={{paddingTop: '30px', paddingBottom: '20px'}}>
+            <Fragment>
+                <div className="d-none d-lg-block">
+                    <Credentials editProfile={editProfile} param={param} credentials={{...credentials}}/>
+                </div>
+                <div className="d-lg-none">
+                    <CredentialsMobile editProfile={editProfile} param={param} credentials={{...credentials}}/>
+                </div>
+                
+                <hr style={{backgroundColor: 'white'}}/>
+                
+                
 
-            <div className="d-lg-none">
-                <Row center className={classes.credentials}>
-                    <Col>
-                        <img className={classes.profilephotomobile} src={`${credentials.profile_photo}`}></img>
-                        <div>
-                            <Row center style={{marginTop: '20px', fontSize: '13px'}}>
-                                <Col size="2"><img className={classes.universityphotomobile} src={`${credentials.university_photoUrl}`}></img></Col>
-                                <Col size="10">
-                                    <p>{credentials.university}</p>
-                                    <p style={{marginTop: '-20px'}}>{credentials.department}</p>
-                                </Col>
-                            </Row>
+                {
+                    posts.length === 0 || !posts ? 
+                        <h1>There is no post!</h1>
+                    :
+                    <div>
+                        <div className="d-none d-lg-block">
+                            <UserPosts posts={posts} joinedUsers={joinedUsers} comment={comment} like={like} param={param} credentials={{...credentials}}/>
                         </div>
-                    </Col>
-                    <Col>
-                        <h4>{credentials.name + " " + credentials.surname}</h4>
-                        <div className={classes.userinfo}>
-                            <Row center>
-                                <Col size="4">
-                                    <p>Konser</p>
-                                    <p className={classes.fixedtext}>{credentials.concert_Count}</p>
-                                </Col>
-                                <Col size="4">
-                                    <p>Etkinlik</p>
-                                    <p className={classes.fixedtext}>{credentials.event_Count}</p>
-                                </Col>
-                                <Col size="4">
-                                    <p>Parti</p>
-                                    <p className={classes.fixedtext}>{credentials.party_Count}</p>
-                                </Col>
-                            </Row>
-                            <Row center>
-                                <Col size="4">
-                                    <p>Takipçi</p>
-                                    <p className={classes.fixedtext}>{credentials.follower_Count}</p>
-                                </Col>
-                                <Col size="4">
-                                    <p>Takip</p>
-                                    <p className={classes.fixedtext}>{credentials.following_Count}</p>
-                                </Col>
-                            </Row>
-                            <Row center>
-                                <Col>
-                                    <Btn color="white" size="sm" type="submit" style={{textTransform: 'none', width: '100%', fontWeight: 'bold'}}>Profili Düzenle</Btn>
-                                </Col>
-                            </Row>
+
+                        <div className="d-lg-none">
+                            <UserPostsMobile posts={posts} joinedUsers={joinedUsers} comment={comment} like={like} param={param} credentials={{...credentials}}/>
                         </div>
-                    </Col>
-                </Row>
-            </div>
-            <hr style={{backgroundColor: 'white'}}/>
+                    </div>
+                }
+            </Fragment>
         </Container>
     )
 }

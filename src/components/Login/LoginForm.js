@@ -21,6 +21,7 @@ const LoginForm = () => {
           (res) => {
             setCookie('SESSION_ID', res.data.token, {path: '/'});
             setCookie('username', res.data.user.username, {path: '/'});
+            setCookie('USER_ID', res.data.user._id, {path: '/'});
             history.push('/');
           }, 
           (err) => {

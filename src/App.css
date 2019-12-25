@@ -1,5 +1,7 @@
 html body {
-  background-color: black;
+  background-image: url('./assets//images//cora-back.png');
+  background-repeat: scroll;
+  background-attachment: fixed;
 }
 
 .page {

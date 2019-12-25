@@ -9,7 +9,9 @@ const DefaultContainer = (props) => (
     <Fragment>
       <Navbar/>
       <Route path="/" exact component={() => <HomePage/>}></Route>
-      <ProtectedRoute path="/profile" component={() => <ProfilePage/>}></ProtectedRoute>
+      <Route path="/profile/:id" exact render={(props) => (
+        <ProfilePage {...props} />
+      )}></Route>
     </Fragment>
 )
 
