@@ -1,38 +1,14 @@
-.credentials {
-    text-align: center;
-    color: white;
+.container {
+    padding-top: 30px;
+    padding-bottom: 20px;
 }
 
-.universityphoto {
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
+hr {
+    background-color: white;
 }
 
-.universityphotomobile {
-    border-radius: 50%;
-    width: 35px;
-    height: 35px;
-}
-
-.profilephoto {
-    border-radius: 50%;
-    width: 200px;
-    height: 200px;
-    object-fit: cover;
-}
-
-.profilephotomobile {
-    border-radius: 50%;
-    width: 150px;
-    height: 150px;
-}
-
-.userinfo {
-    font-size: 14px;
-    margin-top: 30px;
-}
-
-.fixedtext {
-    margin-top: -15px;
+.spinner {
+    display: flex;
+    justify-content: center;
+    margin: 50px;
 }

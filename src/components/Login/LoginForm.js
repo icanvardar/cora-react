@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import classes from './LoginForm.module.css';
 import { useCookies, withCookies } from 'react-cookie';
 import {history} from '../../App';
@@ -34,7 +34,7 @@ const LoginForm = () => {
       <Container className={classes.form}>
         <Row center>
           <Col xs="2">
-            <img src={require('../../assets/images/cora-logo.png')} className={`img-fluid ${classes.coralogo}`}></img>
+            <img src={require('../../assets/images/cora-logo.png')} className={`img-fluid ${classes.coralogo}`} alt=""></img>
           </Col>
         </Row>
         <Row center>

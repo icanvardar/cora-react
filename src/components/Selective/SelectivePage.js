@@ -18,7 +18,7 @@ export default () => {
             <Container className={classes.container}>
                 <Row center>
                     <Col xs="2">
-                        <img src={require('../../assets/images/cora-logo.png')} className={`img-fluid ${classes.coralogo}`}></img>
+                        <img src={require('../../assets/images/cora-logo.png')} className={`img-fluid ${classes.coralogo}`} alt=""></img>
                     </Col>
                 </Row>
                 <h4 className={classes.cardsheading}>Oluşturmak istediğiniz hesap türünü seçiniz.</h4>
@@ -31,7 +31,7 @@ export default () => {
                                 <CardBody>
                                     <Row center>
                                         <Col xs="2">
-                                            <img className={`img-fluid ${classes.cardphoto}`} src={require('../../assets/images/user-photo.png')}/>
+                                            <img className={`img-fluid ${classes.cardphoto}`} src={require('../../assets/images/user-photo.png')} alt=""/>
                                         </Col>
                                     </Row>
                                     
@@ -52,7 +52,7 @@ export default () => {
                                 <CardBody>
                                     <Row center>
                                         <Col xs="2">
-                                            <img className={`img-fluid ${classes.cardphoto}`} src={require('../../assets/images/univ-photo.png')}/>
+                                            <img className={`img-fluid ${classes.cardphoto}`} src={require('../../assets/images/univ-photo.png')} alt=""/>
                                         </Col>
                                     </Row>
 

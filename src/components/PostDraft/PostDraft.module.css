@@ -1,0 +1,76 @@
+.cardcontainer {
+    height: 330px;
+    width: auto;
+    margin-bottom: 25px;
+}
+
+/* Card header that contains user photo, user id and date */
+    
+    .cardheader {
+        color: white;
+        font-size: 12px;
+        margin-bottom: -20px;
+    }
+
+    .cardheaderphotodiv {
+        margin-left: 20px;
+    }
+
+    .cardheaderphoto {
+        width: 30px;
+        height: auto;
+        border-radius: 50%;
+    }
+
+    .cardheaderusername {
+        margin-top: 4px;
+        margin-left: 5px;
+        margin-right: 10px;
+    }
+
+    .cardheaderdate {
+        margin-top: 4px;
+    }
+
+    .cardhr {
+        background-color: grey;
+    }
+
+/* Card body that contains cep id and other credentials */
+
+    .cardbodyphotodiv {
+        text-align: center;
+    }
+
+    .cardbodyphoto {
+        width: 93%;
+        height: 100px;
+        object-fit: cover;
+    }
+
+    .cardbodyinfodiv {
+        color: white;
+        word-wrap: break-word;
+        text-align: center;
+        margin-top: 10px;
+        margin-bottom: -15px;
+    }
+
+    .cardbodycepname {
+        color: #6A86F4;
+    }
+
+    .cardbodycepdate {
+        margin-top: -15px;
+    }
+
+/* Card bottom that has three buttons */
+
+    .cardbottomdiv {
+        text-align: center;
+        color: white;
+    }
+
+    .cardbottombutton {
+        margin-left: 5px;
+    }

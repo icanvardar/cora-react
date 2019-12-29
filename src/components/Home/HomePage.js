@@ -1,22 +1,23 @@
-import React, {useEffect} from 'react';
-import {Link} from 'react-router-dom';
-import { withCookies } from 'react-cookie';
-import { MDBContainer as Container, MDBRow as Row, MDBCol as Col} from 'mdbreact';
+import React, {useContext} from 'react';
+import { MDBContainer as Container } from 'mdbreact';
+
+import Context from '../../utils/Context';
+
+import HomeTabs from '../Tabs/HomeTabs';
 
 const HomePage = (props) => {
-    useEffect(() => {
-        const token = props.cookies.cookies.SESSION_ID;
-    }, [])
+    const {token} = useContext(Context);
 
     return (
         <Container>
-            <Row>
-                <Col>
-                    <h1>Hello this is home HomePage</h1>
-                </Col>
-            </Row>
+            {
+                token ? 
+                <HomeTabs />
+                :
+                <h1>hello</h1>
+            }
         </Container>
     )
 }
 
-export default withCookies(HomePage);
+export default HomePage;

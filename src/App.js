@@ -1,11 +1,11 @@
-import React, {createContext} from 'react';
+import React from 'react';
 import './App.css';
 
 import Context from './utils/Context';
 
-import {tokenGatherer} from './helper/cookieHandler';
+import {tokenGatherer, usernameGatherer} from './helper/cookieHandler';
 
-import { Router, Switch, Route, Redirect } from 'react-router-dom';
+import { Router, Switch, Route } from 'react-router-dom';
 import { CookiesProvider, withCookies } from 'react-cookie';
 import createHistory from 'history/createBrowserHistory';
 
@@ -18,7 +18,7 @@ export const history = createHistory({forceRefresh: true});
 const App = (props) => {
 
   return (
-    <Context.Provider value={{token: tokenGatherer(props)}}>
+    <Context.Provider value={{token: tokenGatherer(props), username: usernameGatherer(props)}}>
       <CookiesProvider>
         <Router history={history}>
           <Switch>

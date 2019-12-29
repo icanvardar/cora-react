@@ -1,0 +1,33 @@
+.tabcontainer {
+    margin-top: 15px;
+    background-color: black;
+    border: 0.5px solid #6A86F4;
+    border-radius: 20px;
+}
+
+.tabselectedleft {
+    background-color: #6A86F4;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+}
+
+.tabselectedmiddle {
+    background-color: #6A86F4;
+}
+
+.tabselectedright {
+    background-color: #6A86F4;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+.tabtextdefault {
+    font-size: 15px;
+    color: grey;
+}
+
+.tabtextselected {
+    font-size: 16px;
+    font-weight: 400;
+    color: white;
+}

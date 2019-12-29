@@ -1,9 +1,9 @@
 import React, { useState, useContext } from "react";
 import Context from "../../utils/Context";
 
-import { MDBContainer as Container, MDBCol as Col , MDBRow as Row, MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavItem, MDBNavLink, MDBNavbarToggler, MDBCollapse, MDBDropdown,
+import { MDBContainer as Container, MDBCol as Col , MDBRow as Row, MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavItem, MDBDropdown,
 MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem, MDBIcon, MDBFormInline } from "mdbreact";
-import { BrowserRouter as Router, Link } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 import {history} from '../../App';
 import classes from './Navbar.module.css';
@@ -26,7 +26,7 @@ const Navbar = (props) => {
         <Container>   
             <MDBNavbarBrand>
               <a href="/">
-                <img className={classes.navbarbrand} src={require('../../assets/images/cora-logo.png')}></img>
+                <img className={classes.navbarbrand} src={require('../../assets/images/cora-logo.png')} alt="nav-logo"></img>
               </a>
             </MDBNavbarBrand>
             

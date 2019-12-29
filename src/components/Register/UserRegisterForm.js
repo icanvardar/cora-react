@@ -16,7 +16,6 @@ import {
   KeyboardDatePicker
 } from '@material-ui/pickers';
 
-import {Link} from 'react-router-dom';
 import { MDBContainer as Container, MDBRow as Row, MDBCol as Col, MDBBtn as Btn, MDBInput as Input, MDBCard as Card, MDBCardBody as CardBody, MDBAlert as Alert } from 'mdbreact';
 import { history } from '../../App';
 
@@ -126,7 +125,7 @@ const UserRegisterForm = (props) => {
       <Container className={classes.form}>
         <Row center>
           <Col xs="2">
-            <img src={require('../../assets/images/cora-logo.png')} className={`img-fluid ${classes.coralogo}`}></img>
+            <img src={require('../../assets/images/cora-logo.png')} className={`img-fluid ${classes.coralogo}`} alt=""></img>
           </Col>
         </Row>
         <Row center>

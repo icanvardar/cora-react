@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import UserRegisterForm from './UserRegisterForm';
 import UniversityRegisterForm from './UniversityRegisterForm';
 import Context from '../../utils/Context';
