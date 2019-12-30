@@ -1,18 +1,72 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState, useEffect} from 'react';
+
+import {MDBRow as Row} from 'mdbreact';
 
 import PostDraft from './PostDraft';
-import PostDraftMobile from './PostDraftMobile';
 
 import {addLikes} from '../../utils/apiRequests/notification'
+import {isIt, deleteLike} from '../../utils/apiRequests/connectionUser/like';
 
 import Context from '../../utils/Context';
 
 const PostDraftProvider = (props) => {
     const {token, username} = useContext(Context);
+    // const [color, setColor] = useState({});
 
-    const like = () => {
-        console.log('Liked it!');
+    const [posts, setPosts] = useState([]);
+
+    useEffect(() => {
+        setPosts(props.posts);
+    }, [props.posts])
+
+    const like = (ucAlldata_id, username, ownpost_id, type_CEP) => {
+        isIt(token, {ucAlldata_id},
+            (res) => {
+                console.log('isLiked worked!')
+                if (res.data === true) {
+                    removeLike(ucAlldata_id);
+                } else {
+                    addLike(ucAlldata_id, username, ownpost_id, type_CEP);
+                }
+            },
+            (err) => {
+                console.log(err);
+            })
     }
+
+    const addLike = (ucAlldata_id, username, ownpost_id, type_CEP) => {
+        addLikes(token, {ucAlldata_id, firebaseToken: '1', username, ownpost_id, type_CEP},
+            (res) => {
+                console.log('like worked!');
+            },
+            (err) => {
+                console.log(err);
+            })
+    }
+
+    const removeLike = (ucAlldata_id) => {
+        deleteLike(token, {ucAlldata_id},
+            (res) => {
+                console.log('removeLike worked!');
+            },
+            (err) => {
+                console.log(err);
+            })
+    }
+
+    // const isLiked = (ucAlldata_id) => {
+    //     isIt(token, {ucAlldata_id},
+    //         (res) => {
+    //             if (res.data === true) {
+    //                 setColor({color: 'red'});
+    //             } else {
+    //                 setColor({color: 'white'});
+    //             }
+    //         },
+    //         (err) => {
+    //             console.log(err);
+    //         })
+    // }
     
     const comment = () => {
         console.log('Comment it out!');
@@ -27,13 +81,17 @@ const PostDraftProvider = (props) => {
                     </div>
                 </div>
                 :
-                <div>
-                    <div className="d-none d-md-block mt-2">
-                        <PostDraft posts={props.posts} like={like} comment={comment} credentials={props.credentials}/>
-                    </div>
-                    <div className="d-md-none">
-                        <PostDraftMobile posts={props.posts} like={like} comment={comment} credentials={props.credentials}/>
-                    </div>
+                <div style={{marginTop: '20px'}}>
+                    <Row>
+                    {
+                        posts.map(post => 
+                            props.credentials ?
+                                <PostDraft key={post._id} post={post} like={like} comment={comment} credentials={props.credentials}/>
+                            :
+                                <PostDraft key={post._id} post={post} like={like} comment={comment}/>
+                            )
+                    }
+                    </Row>
                 </div>
             }
         </div>

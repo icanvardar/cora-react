@@ -76,6 +76,7 @@ const ProfilePage = ({match, location}) => {
             (res) => { 
                 setPosts(res.data);
                 setPostsLoading(false);
+                console.log(res.data);
             },
             (err) => {
                 console.log(err);
