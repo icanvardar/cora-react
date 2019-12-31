@@ -4,6 +4,8 @@ import {MDBRow as Row, MDBCol as Col, MDBCard as Card, MDBCardBody as CardBody, 
 import classes from './PostDraft.module.css';
 import mobileClasses from './PostDraftMobile.module.css';
 
+import {Link} from 'react-router-dom';
+
 import JoinedUsersModal from '../Modal/JoinedUsersModal';
 
 import {isIt, deleteLike} from '../../utils/apiRequests/connectionUser/like';
@@ -19,6 +21,7 @@ const PostDraft = (props) => {
 
     useEffect(() => {
         isLiked(post._id);
+        console.log(post);
     }, [])
 
     const isLiked = (ucAlldata_id) => {
@@ -47,82 +50,190 @@ const PostDraft = (props) => {
 
     return (
         <Fragment>
-            <Col className="d-none d-md-block mt-2" size="6">
-                <Card className={classes.cardcontainer} style={{backgroundColor: '#151515'}}>
-                    <CardBody>
-                        <Row className={classes.cardheader}>
-                            <Col xs="1" className={classes.cardheaderphotodiv}><img className={classes.cardheaderphoto} src={props.credentials ? credentials.profile_photo : post.user_id.profile_photo} alt=""/></Col>
-                            <Col xs="3" className={classes.cardheaderusername}><p>{`@${props.credentials ? credentials.username : post.user_id.username}`}</p></Col>
-                            <Col xs="4" className={classes.cardheaderdate}><p>{post.cep_inf.date}</p></Col>
-                        </Row>
-                        <hr />
+            {post.produced_id ?
+                <Fragment>
+                    <Col className="d-none d-md-block mt-2" size="6">
+                        <Card className={classes.cardcontainer} style={{backgroundColor: '#151515'}}>
+                            <CardBody>
+                                <Row className={classes.cardheader}>
+                                    <Col xs="1" className={classes.cardheaderphotodiv}><a href={`/profile/${post.produced_id.username}`}><img className={classes.cardheaderphoto} src={post.produced_id.profile_photo} alt=""/></a></Col>
+                                    <Col xs="3" className={classes.cardheaderusername}><a href={`/profile/${post.produced_id.username}`}><p>{`@${post.produced_id.username}`}</p></a></Col>
+                                    <Col xs="4" className={classes.cardheaderdate}><p>{post.date}</p></Col>
+                                </Row>
+                                <hr />
 
-                        <Row center>
-                            <Col xs="4" className={classes.cardbodyphotodiv}>
-                                <img className={classes.cardbodyphoto} src={post.cep_inf.event_photo || post.cep_inf.party_photo || post.cep_inf.musician_photo} alt=""/>
-                            </Col>
-                            <Col xs="6" className={classes.cardbodyinfodiv}>
-                                <h5 className={classes.cardbodycepname}>{post.cep_inf.name}</h5>
-                                <p>{post.cep_inf.university}</p>
-                                <p className={classes.cardbodycepdate}>{post.cep_inf.date}</p>
-                            </Col>
-                        </Row>
-                        <hr className={classes.cardhr}/>
-                        
-                        <Row between className={classes.cardbottomdiv}>
-                            <Col size="2"><JoinedUsersModal post={post}/></Col>
-                            <Col onClick={() => props.comment()} size="2"><MDBIcon icon="comment" /><span className={classes.cardbottombutton}>{post.comment_count}</span></Col>
-                            <Col onClick={async () => {
-                                if (credentials) {
-                                    props.like(post._id, credentials.username, post.user_id, post.tur)
-                                    likeSupervisor(color);
-                                } else {
-                                    props.like(post._id, post.user_id.username, post.user_id, post.tur)
-                                    likeSupervisor(color);
-                                }
-                            }} size="2"><MDBIcon style={{color: color}} icon="heart" /><span className={classes.cardbottombutton}>{likeCount}</span></Col>
-                        </Row>
-                    </CardBody> 
-                </Card>
-            </Col>
 
-            <Col className="d-md-none" size="12">
-                <Card className={mobileClasses.cardcontainer} style={{backgroundColor: '#151515'}}>
-                    <CardBody>
-                        <Row className={mobileClasses.cardheader}>
-                            <Col xs="1" className={mobileClasses.cardheaderphotodiv}><img className={mobileClasses.cardheaderphoto} src={props.credentials ? credentials.profile_photo : post.user_id.profile_photo} alt=""/></Col>
-                            <Col xs="3" className={mobileClasses.cardheaderusername}><p>{`@${props.credentials ? credentials.username : post.user_id.username}`}</p></Col>
-                            <Col xs="4" className={mobileClasses.cardheaderdate}><p>{post.cep_inf.date}</p></Col>
-                        </Row>
-                        <hr className={mobileClasses.cardhr}/>
+                                <Link to={{
+                                    pathname: `/post/${post._id}`,
+                                    state: {
+                                        post
+                                    }
+                                }}>
+                                    <Row center>
+                                        <Col xs="4" className={classes.cardbodyphotodiv}>
+                                            <img className={classes.cardbodyphoto} src={post.party_photo} alt=""/>
+                                        </Col>
+                                    </Row>
+                                    <Row center>
+                                        <Col xs="6" className={classes.cardbodyinfodiv}>
+                                            <h5 className={classes.cardbodycepname}>{post.name}</h5>
+                                            <p>{post.location}</p>
+                                            <p className={classes.cardbodycepdate}>{post.date}</p>
+                                        </Col>
+                                    </Row>
+                                </Link>
+                                
+                                <hr className={classes.cardhr}/>
+                                
+                                <Row between className={classes.cardbottomdiv}>
+                                    <Col size="2"><JoinedUsersModal post={post}/></Col>
+                                    <Col onClick={() => props.comment()} size="2"><MDBIcon icon="comment" /><span className={classes.cardbottombutton}>{post.comment_count}</span></Col>
+                                    <Col onClick={async () => {
+                                        props.like(post._id, post.produced_id.username, post.produced_id._id, post.tur)
+                                        likeSupervisor(color);
+                                    }} size="2"><MDBIcon style={{color: color}} icon="heart" /><span className={classes.cardbottombutton}>{likeCount}</span></Col>
+                                </Row>
+                            </CardBody> 
+                        </Card>
+                    </Col>
 
-                        
-                        <Row>
-                            <Col className={mobileClasses.cardbodydiv}>
-                                <img className={mobileClasses.cardbodyphoto} src={post.cep_inf.event_photo || post.cep_inf.party_photo || post.cep_inf.musician_photo} alt=""/>
-                                <h5 className={mobileClasses.cardbodycepname}>{post.cep_inf.name}</h5>
-                                <p>{post.cep_inf.university}</p>
-                                <p className={mobileClasses.cardbodycepdate}>{post.cep_inf.date}</p>
-                            </Col>
-                        </Row>
-                        
-                        <div className={mobileClasses.cardbottomdiv}>
-                            <div className={mobileClasses.cardbottombuttondiv} ><JoinedUsersModal post={post}/></div>
-                            <div className={mobileClasses.cardbottombuttondiv} ><MDBIcon className={mobileClasses.cardbottombutton} onClick={() => props.comment()}icon="comment" />{post.comment_count}</div>
-                            <div><MDBIcon style={{color: color}} className={mobileClasses.cardbottombutton} onClick={() => {
-                                if (credentials) {
-                                    props.like(post._id, credentials.username, post.user_id, post.tur)
-                                    likeSupervisor(color);
-                                } else {
-                                    props.like(post._id, post.user_id.username, post.user_id, post.tur)
-                                    likeSupervisor(color);
-                                }
-                            }} icon="heart" />{likeCount}</div>
-                        </div>
+                    <Col className="d-md-none" size="12">
+                        <Card className={mobileClasses.cardcontainer} style={{backgroundColor: '#151515'}}>
+                            <CardBody>
+                                <Row className={mobileClasses.cardheader}>
+                                    <Col xs="1" className={mobileClasses.cardheaderphotodiv}><a href={`/profile/${post.produced_id.username}`}><img className={mobileClasses.cardheaderphoto} src={post.produced_id.profile_photo} alt=""/></a></Col>
+                                    <Col xs="3" className={mobileClasses.cardheaderusername}><a href={`/profile/${post.produced_id.username}`}><p>{`@${post.produced_id.username}`}</p></a></Col>
+                                    <Col xs="4" className={mobileClasses.cardheaderdate}><p>{post.date}</p></Col>
+                                </Row>
+                                <hr className={mobileClasses.cardhr}/>
 
-                    </CardBody> 
-                </Card>
-            </Col>
+                                <Link to={{
+                                    pathname: `/post/${post._id}`,
+                                    state: {
+                                        post
+                                    }
+                                }}>
+                                    <Row>
+                                        <Col className={mobileClasses.cardbodydiv}>
+                                            <img className={mobileClasses.cardbodyphoto} src={post.party_photo} alt=""/>
+                                            <h5 className={mobileClasses.cardbodycepname}>{post.name}</h5>
+                                            <p>{post.location}</p>
+                                            <p className={mobileClasses.cardbodycepdate}>{post.date}</p>
+                                        </Col>
+                                    </Row>
+                                </Link>
+                                
+                                <div className={mobileClasses.cardbottomdiv}>
+                                    <div className={mobileClasses.cardbottombuttondiv} ><JoinedUsersModal post={post}/></div>
+                                    <div className={mobileClasses.cardbottombuttondiv} ><MDBIcon className={mobileClasses.cardbottombutton} onClick={() => props.comment()}icon="comment" />{post.comment_count}</div>
+                                    <div><MDBIcon style={{color: color}} className={mobileClasses.cardbottombutton} onClick={() => {
+                                        props.like(post._id, post.produced_id.username, post.produced_id._id, post.tur)
+                                        likeSupervisor(color);
+                                    }} icon="heart" />{likeCount}</div>
+                                </div>
+
+                            </CardBody> 
+                        </Card>
+                    </Col>
+                    
+                </Fragment>
+                :
+                <Fragment>
+                    <Col className="d-none d-md-block mt-2" size="6">
+                        <Card className={classes.cardcontainer} style={{backgroundColor: '#151515'}}>
+                            <CardBody>
+                                <Row className={classes.cardheader}>
+                                    <Col xs="1" className={classes.cardheaderphotodiv}><a href={`/profile/${props.credentials ? credentials.username : post.user_id.username}`}><img className={classes.cardheaderphoto} src={props.credentials ? credentials.profile_photo : post.user_id.profile_photo} alt=""/></a></Col>
+                                    <Col xs="3" className={classes.cardheaderusername}><a href={`/profile/${props.credentials ? credentials.username : post.user_id.username}`}><p>{`@${props.credentials ? credentials.username : post.user_id.username}`}</p></a></Col>
+                                    <Col xs="4" className={classes.cardheaderdate}><p>{post.cep_inf.date}</p></Col>
+                                </Row>
+                                <hr />
+
+
+                                <Link to={{
+                                    pathname: `/post/${post._id}`,
+                                    state: {
+                                        post
+                                    }
+                                }}>
+                                    <Row center>
+                                        <Col xs="4" className={classes.cardbodyphotodiv}>
+                                            <img className={classes.cardbodyphoto} src={post.cep_inf.event_photo || post.cep_inf.party_photo || post.cep_inf.musician_photo} alt=""/>
+                                        </Col>
+                                    </Row>
+                                    <Row center>
+                                        <Col xs="6" className={classes.cardbodyinfodiv}>
+                                            <h5 className={classes.cardbodycepname}>{post.cep_inf.name}</h5>
+                                            <p>{post.cep_inf.location}</p>
+                                            <p className={classes.cardbodycepdate}>{post.cep_inf.date}</p>
+                                        </Col>
+                                    </Row>
+                                </Link>
+                                
+                                <hr className={classes.cardhr}/>
+                                
+                                <Row between className={classes.cardbottomdiv}>
+                                    <Col size="2"><JoinedUsersModal post={post}/></Col>
+                                    <Col onClick={() => props.comment()} size="2"><MDBIcon icon="comment" /><span className={classes.cardbottombutton}>{post.comment_count}</span></Col>
+                                    <Col onClick={async () => {
+                                        if (credentials) {
+                                            props.like(post._id, credentials.username, post.user_id, post.tur)
+                                            likeSupervisor(color);
+                                        } else {
+                                            props.like(post._id, post.user_id.username, post.user_id, post.tur)
+                                            likeSupervisor(color);
+                                        }
+                                    }} size="2"><MDBIcon style={{color: color}} icon="heart" /><span className={classes.cardbottombutton}>{likeCount}</span></Col>
+                                </Row>
+                            </CardBody> 
+                        </Card>
+                    </Col>
+
+                    <Col className="d-md-none" size="12">
+                        <Card className={mobileClasses.cardcontainer} style={{backgroundColor: '#151515'}}>
+                            <CardBody>
+                                <Row className={mobileClasses.cardheader}>
+                                    <Col xs="1" className={mobileClasses.cardheaderphotodiv}><a href={`/profile/${props.credentials ? credentials.username : post.user_id.username}`}><img className={mobileClasses.cardheaderphoto} src={props.credentials ? credentials.profile_photo : post.user_id.profile_photo} alt=""/></a></Col>
+                                    <Col xs="3" className={mobileClasses.cardheaderusername}><a href={`/profile/${props.credentials ? credentials.username : post.user_id.username}`}><p>{`@${props.credentials ? credentials.username : post.user_id.username}`}</p></a></Col>
+                                    <Col xs="4" className={mobileClasses.cardheaderdate}><p>{post.cep_inf.date}</p></Col>
+                                </Row>
+                                <hr className={mobileClasses.cardhr}/>
+
+                                <Link to={{
+                                    pathname: `/post/${post._id}`,
+                                    state: {
+                                        post
+                                    }
+                                }}>
+                                    <Row>
+                                        <Col className={mobileClasses.cardbodydiv}>
+                                            <img className={mobileClasses.cardbodyphoto} src={post.cep_inf.event_photo || post.cep_inf.party_photo || post.cep_inf.musician_photo} alt=""/>
+                                            <h5 className={mobileClasses.cardbodycepname}>{post.cep_inf.name}</h5>
+                                            <p>{post.cep_inf.location}</p>
+                                            <p className={mobileClasses.cardbodycepdate}>{post.cep_inf.date}</p>
+                                        </Col>
+                                    </Row>
+                                </Link>
+                                
+                                <div className={mobileClasses.cardbottomdiv}>
+                                    <div className={mobileClasses.cardbottombuttondiv} ><JoinedUsersModal post={post}/></div>
+                                    <div className={mobileClasses.cardbottombuttondiv} ><MDBIcon className={mobileClasses.cardbottombutton} onClick={() => props.comment()}icon="comment" />{post.comment_count}</div>
+                                    <div><MDBIcon style={{color: color}} className={mobileClasses.cardbottombutton} onClick={() => {
+                                        if (credentials) {
+                                            props.like(post._id, credentials.username, post.user_id, post.tur)
+                                            likeSupervisor(color);
+                                        } else {
+                                            props.like(post._id, post.user_id.username, post.user_id, post.tur)
+                                            likeSupervisor(color);
+                                        }
+                                    }} icon="heart" />{likeCount}</div>
+                                </div>
+
+                            </CardBody> 
+                        </Card>
+                    </Col>
+                </Fragment>
+            }
         </Fragment>
     )
 }

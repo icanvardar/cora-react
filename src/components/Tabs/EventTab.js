@@ -1,6 +1,6 @@
 import React from 'react';
 
-const EventTab = () => {
+const PartyTab = () => {
     return (
         <h1>
             Event
@@ -8,4 +8,4 @@ const EventTab = () => {
     )
 }
 
-export default EventTab;
+export default PartyTab;

@@ -11,7 +11,6 @@ import Context from '../../utils/Context';
 
 const PostDraftProvider = (props) => {
     const {token, username} = useContext(Context);
-    // const [color, setColor] = useState({});
 
     const [posts, setPosts] = useState([]);
 
@@ -54,20 +53,6 @@ const PostDraftProvider = (props) => {
             })
     }
 
-    // const isLiked = (ucAlldata_id) => {
-    //     isIt(token, {ucAlldata_id},
-    //         (res) => {
-    //             if (res.data === true) {
-    //                 setColor({color: 'red'});
-    //             } else {
-    //                 setColor({color: 'white'});
-    //             }
-    //         },
-    //         (err) => {
-    //             console.log(err);
-    //         })
-    // }
-    
     const comment = () => {
         console.log('Comment it out!');
     }

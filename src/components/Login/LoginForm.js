@@ -39,7 +39,7 @@ const LoginForm = () => {
         </Row>
         <Row center>
           <Col md="6">
-            <Card color="black">
+            <Card style={{backgroundColor: 'transparent'}}>
               <CardBody>
                 <form onSubmit={submit}>
                   <div className="grey-text">

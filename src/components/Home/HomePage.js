@@ -9,7 +9,7 @@ const HomePage = (props) => {
     const {token} = useContext(Context);
 
     return (
-        <Container>
+        <Container className="page">
             {
                 token ? 
                 <HomeTabs />

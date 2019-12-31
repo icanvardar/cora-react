@@ -58,72 +58,72 @@ const HomeTabs = () => {
     }
 
     return (
-        <div>
-        <MDBNav tabs className={`${classes.tabcontainer} nav-justified`}>
-          <MDBNavItem>
-            <MDBNavLink to="#" active className={receiveSelected('1')} onClick={(e) => {
-                e.preventDefault();
-                toggle('1');
-            }} role="tab" >
-                <div className={tabTextChanger('1')}>
-                    <MDBIcon icon="home" /> Anasayfa
+        <div className="page">
+            <MDBNav tabs className={`${classes.tabcontainer} nav-justified`}>
+            <MDBNavItem>
+                <MDBNavLink to="#" active className={receiveSelected('1')} onClick={(e) => {
+                    e.preventDefault();
+                    toggle('1');
+                }} role="tab" >
+                    <div className={tabTextChanger('1')}>
+                        <MDBIcon icon="home" /> Anasayfa
+                    </div>
+                </MDBNavLink>
+            </MDBNavItem>
+            <MDBNavItem>
+                <MDBNavLink to="#" active className={receiveSelected('2')} onClick={(e) => {
+                    e.preventDefault();
+                    toggle('2');
+                }} role="tab">
+                    <div className={tabTextChanger('2')}>
+                        <MDBIcon icon="music" /> Konser
+                    </div>
+                </MDBNavLink>
+            </MDBNavItem>
+            <MDBNavItem>
+                <MDBNavLink to="#" active className={receiveSelected('3')} onClick={(e) => {
+                    e.preventDefault();
+                    toggle('3');
+                }} role="tab" >
+                <div className={tabTextChanger('3')}>
+                    <MDBIcon icon="calendar-day" /> Etkinlik
                 </div>
-            </MDBNavLink>
-          </MDBNavItem>
-          <MDBNavItem>
-            <MDBNavLink to="#" active className={receiveSelected('2')} onClick={(e) => {
-                e.preventDefault();
-                toggle('2');
-            }} role="tab">
-                <div className={tabTextChanger('2')}>
-                    <MDBIcon icon="music" /> Konser
+                </MDBNavLink>
+            </MDBNavItem>
+            <MDBNavItem>
+                <MDBNavLink to="#" active className={receiveSelected('4')} onClick={(e) => {
+                    e.preventDefault();
+                    toggle('4');
+                }} role="tab" >
+                <div className={tabTextChanger('4')}>
+                    <MDBIcon icon="glass-martini-alt" /> Parti
                 </div>
-            </MDBNavLink>
-          </MDBNavItem>
-          <MDBNavItem>
-            <MDBNavLink to="#" active className={receiveSelected('3')} onClick={(e) => {
-                e.preventDefault();
-                toggle('3');
-            }} role="tab" >
-              <div className={tabTextChanger('3')}>
-                <MDBIcon icon="calendar-day" /> Etkinlik
-              </div>
-            </MDBNavLink>
-          </MDBNavItem>
-          <MDBNavItem>
-            <MDBNavLink to="#" active className={receiveSelected('4')} onClick={(e) => {
-                e.preventDefault();
-                toggle('4');
-            }} role="tab" >
-              <div className={tabTextChanger('4')}>
-                <MDBIcon icon="glass-martini-alt" /> Parti
-              </div>
-            </MDBNavLink>
-          </MDBNavItem>
-        </MDBNav>
+                </MDBNavLink>
+            </MDBNavItem>
+            </MDBNav>
 
-        <MDBTabContent activeItem={activeItem} >
-          <MDBTabPane tabId="1" role="tabpanel">
-            
-            <PostDraftProvider posts={posts} postsLoading={postsLoading}/>
+            <MDBTabContent activeItem={activeItem} >
+            <MDBTabPane tabId="1" role="tabpanel">
+                
+                <PostDraftProvider posts={posts} postsLoading={postsLoading}/>
 
-          </MDBTabPane>
-          <MDBTabPane tabId="2" role="tabpanel">
+            </MDBTabPane>
+            <MDBTabPane tabId="2" role="tabpanel">
+                
+                <ConcertTab/>
+                
+            </MDBTabPane>
+            <MDBTabPane tabId="3" role="tabpanel">
+                
+                <EventTab/>
             
-              <ConcertTab/>
-            
-          </MDBTabPane>
-          <MDBTabPane tabId="3" role="tabpanel">
-            
-              <EventTab/>
-           
-          </MDBTabPane>
-          <MDBTabPane tabId="4" role="tabpanel">
-            
-              <PartyTab/>
-            
-          </MDBTabPane>
-        </MDBTabContent>
+            </MDBTabPane>
+            <MDBTabPane tabId="4" role="tabpanel">
+                
+                <PartyTab/>
+                
+            </MDBTabPane>
+            </MDBTabContent>
         </div>
     )
 }

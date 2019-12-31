@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './App.css';
 
 import Context from './utils/Context';
@@ -16,6 +16,9 @@ import RegisterContainer from './containers/RegisterContainer';
 export const history = createHistory({forceRefresh: true});
 
 const App = (props) => {
+  useEffect(() => {
+    console.log('CORA');
+  }, [])
 
   return (
     <Context.Provider value={{token: tokenGatherer(props), username: usernameGatherer(props)}}>

@@ -130,7 +130,7 @@ const UserRegisterForm = (props) => {
         </Row>
         <Row center>
           <Col md="6">
-            <Card color="black">
+            <Card style={{backgroundColor: 'transparent'}}>
               <CardBody>
                 <form onSubmit={submit}>
                   <h3 className={classes.stepheading}>Kişisel Bilgiler</h3>

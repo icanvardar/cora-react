@@ -15,7 +15,7 @@ const JoinedUsersModal = (props) => {
     }
 
     useEffect(() => {
-        const cep_id = props.post.cep_id;
+        const cep_id = props.post.cep_id || props.post._id;
         getUsers(token, {paginationNumber: "0", cep_id},
             (res) => {
                 setUsers(res.data);
@@ -51,7 +51,7 @@ const JoinedUsersModal = (props) => {
                 </MDBModalBody>
             </MDBModal>
 
-            <MDBIcon onClick={() => toggle()} icon="users" /><span style={{marginLeft: '5px'}}>{props.post.cep_inf.user_Count}</span>
+            <MDBIcon onClick={() => toggle()} icon="users" /><span style={{marginLeft: '5px'}}>{props.post.cep_inf ? props.post.cep_inf.user_Count : props.post.user_Count}</span>
         </div>
     );
   

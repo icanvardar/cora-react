@@ -143,7 +143,7 @@ const ProfilePage = ({match, location}) => {
     }
 
     return (
-        <Container className={classes.container}>
+        <Container className={`${classes.container} page`}>
             <Fragment>
                 <div className="d-none d-lg-block">
                     <Credentials editProfile={editProfile} follow={follow} unfollow={unfollow} isFollowing={isFollowing} param={param} credentials={{...credentials}} credentialsLoading={credentialsLoading}/>
