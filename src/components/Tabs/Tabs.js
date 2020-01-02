@@ -1,35 +1,15 @@
 import React, {useState, useEffect, useContext} from 'react';
 import { MDBNav, MDBNavItem, MDBNavLink, MDBIcon, MDBTabContent, MDBTabPane } from "mdbreact";
 
-import Context from '../../utils/Context';
+import classes from './HomeTabs.module.css';
 
+import HomeTab from './HomeTab';
 import ConcertTab from './ConcertTab';
 import EventTab from './EventTab';
 import PartyTab from './PartyTab';
 
-import {getAllData} from '../../utils/apiRequests/connectionUser/alldata';
-
-import classes from './HomeTabs.module.css';
-import PostDraftProvider from '../PostDraft/PostDraftProvider';
-
-const HomeTabs = () => {
-    const {token} = useContext(Context);
-    const [posts, setPosts] = useState([]);
+const Tabs = () => {
     const [activeItem, setActiveItem] = useState('1');
-
-    const [postsLoading, setPostsLoading] = useState(true);
-
-    useEffect(() => {
-      getAllData(token, 
-        (res) => {
-            console.log(res.data);
-            setPosts(res.data);
-            setPostsLoading(false);
-        },
-        (err) => {
-            console.log(err);
-        })
-    }, [])
 
     const toggle = (tabName) => {
         setActiveItem(tabName);
@@ -105,7 +85,7 @@ const HomeTabs = () => {
             <MDBTabContent activeItem={activeItem} >
             <MDBTabPane tabId="1" role="tabpanel">
                 
-                <PostDraftProvider posts={posts} postsLoading={postsLoading}/>
+                <HomeTab activeItem={activeItem}/>
 
             </MDBTabPane>
             <MDBTabPane tabId="2" role="tabpanel">
@@ -120,7 +100,7 @@ const HomeTabs = () => {
             </MDBTabPane>
             <MDBTabPane tabId="4" role="tabpanel">
                 
-                <PartyTab/>
+                <PartyTab activeItem={activeItem}/>
                 
             </MDBTabPane>
             </MDBTabContent>
@@ -128,4 +108,4 @@ const HomeTabs = () => {
     )
 }
 
-export default HomeTabs;
+export default Tabs;

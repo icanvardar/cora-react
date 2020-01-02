@@ -2,7 +2,8 @@ import React, {useContext, useState, useEffect} from 'react';
 
 import {MDBRow as Row} from 'mdbreact';
 
-import PostDraft from './PostDraft';
+import GeneralPostDraft from './GeneralPostDraft';
+import PartyPostDraft from './PartyPostDraft';
 
 import {addLikes} from '../../utils/apiRequests/notification'
 import {isIt, deleteLike} from '../../utils/apiRequests/connectionUser/like';
@@ -21,7 +22,7 @@ const PostDraftProvider = (props) => {
     const like = (ucAlldata_id, username, ownpost_id, type_CEP) => {
         isIt(token, {ucAlldata_id},
             (res) => {
-                console.log('isLiked worked!')
+                console.log(res.data);
                 if (res.data === true) {
                     removeLike(ucAlldata_id);
                 } else {
@@ -71,9 +72,15 @@ const PostDraftProvider = (props) => {
                     {
                         posts.map(post => 
                             props.credentials ?
-                                <PostDraft key={post._id} post={post} like={like} comment={comment} credentials={props.credentials}/>
+                                // For profile posts
+                                <GeneralPostDraft key={post._id} post={post} like={like} comment={comment} credentials={props.credentials}/>
                             :
-                                <PostDraft key={post._id} post={post} like={like} comment={comment}/>
+                                post.produced_id ?
+                                    // For party tab posts
+                                    <PartyPostDraft key={post._id} post={post} like={like} comment={comment}/>
+                                    :
+                                    // For home tab posts
+                                    <GeneralPostDraft key={post._id} post={post} like={like} comment={comment}/>
                             )
                     }
                     </Row>
