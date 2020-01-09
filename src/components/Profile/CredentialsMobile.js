@@ -75,7 +75,7 @@ const CredentialsMobile = (props) => {
                             {param === "me" || param === username ?
                                 <Row center>
                                     <Col>
-                                        <Btn onClick={props.editProfile} color="white" size="sm" type="submit" style={{textTransform: 'none', width: '100%', fontWeight: 'bold'}}>Profili Düzenle</Btn>
+                                        <Btn onClick={() => props.editProfile()} color="white" size="sm" type="submit" style={{textTransform: 'none', width: '100%', fontWeight: 'bold'}}>Profili Düzenle</Btn>
                                     </Col>
                                 </Row>
                                 :

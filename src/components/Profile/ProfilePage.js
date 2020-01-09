@@ -3,13 +3,17 @@ import { withCookies } from 'react-cookie';
 import { MDBContainer as Container } from 'mdbreact';
 
 import {userInfToken, findUser} from '../../utils/apiRequests/userwithtoken';
-import {getUserData} from '../../utils/apiRequests/connectionUser/alldata';
+
 import {addFollowings, quitFollowings} from '../../utils/apiRequests/notification';
 import {isItFollowing} from '../../utils/apiRequests/connectionUser/followings';
+
+import {MDBRow as Row, MDBCol as Col, MDBAlert as Alert, MDBBtn as Btn} from 'mdbreact';
 
 import Context from '../../utils/Context';
 import classes from './ProfilePage.module.css';
 import {history} from '../../App';
+
+import EditProfileModal from '../Modal/EditProfileModal';
 
 import Credentials from './Credentials';
 import CredentialsMobile from './CredentialsMobile';
@@ -21,10 +25,10 @@ const ProfilePage = ({match, location}) => {
     const [param, setParam] = useState(match.params.id);
     const [posts, setPosts] = useState([]);
     const [isFollowing, setIsFollowing] = useState();
-
+    // For edit profile modal
+    const [isOpen, setIsOpen] = useState(false);
     const [credentialsLoading, setCredentialsLoading] = useState(true);
-    const [postsLoading, setPostsLoading] = useState(true);
-
+    
     useEffect(() => {
         const searchType = match.params.id;
 
@@ -63,20 +67,6 @@ const ProfilePage = ({match, location}) => {
         isItFollowing(token, {user_id: credentials._id},
             (res) => {
                 setIsFollowing(res.data);
-            },
-            (err) => {
-                console.log(err);
-            }
-        )
-    }, [credentials])
-
-    // Gets user's posts on profile
-    useEffect(() => {
-        getUserData(token, {_id: credentials._id, paginationNumber: "0"},
-            (res) => { 
-                setPosts(res.data);
-                setPostsLoading(false);
-                console.log(res.data);
             },
             (err) => {
                 console.log(err);
@@ -131,16 +121,15 @@ const ProfilePage = ({match, location}) => {
     }
 
     const editProfile = () => {
-        console.log('You just clicked edit button!');
+        setIsOpen(true);
     }
 
-    const comment = () => {
-        console.log('You clicked comment button!')
-    }
-
-    const like = (postId) => {
-        console.log('liked');
-    }
+    // Fixes double click problem
+    useEffect(() => {
+        if (isOpen === true) {
+            setIsOpen(false);
+        }
+    }, [isOpen])
 
     return (
         <Container className={`${classes.container} page`}>
@@ -154,9 +143,19 @@ const ProfilePage = ({match, location}) => {
                 
                 <hr/>
                 
-                <PostDraftProvider posts={posts} param={param} credentials={{...credentials}} postsLoading={postsLoading} />
-                
+                <PostDraftProvider param={param} credentials={{...credentials}} id={credentials._id}/>
+
             </Fragment>
+
+            <EditProfileModal isOpen={isOpen} 
+                userData={{
+                    name: credentials.name,
+                    surname: credentials.surname,
+                    username: credentials.username,
+                    spotifyUsername: credentials.spotifyUsername,
+                    instagramUsername: credentials.instagramUsername,
+                    twitterUsername: credentials.twitterUsername
+            }}/>
         </Container>
     )
 }

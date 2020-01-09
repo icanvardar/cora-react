@@ -1,11 +1,14 @@
-import React from 'react';
+import React, {useState, useEffect, useContext, Fragment} from 'react';
 
-const PartyTab = () => {
+import PostDraftProvider from '../PostDraft/PostDraftProvider';
+
+const EventTab = (props) => {
+
     return (
-        <h1>
-            Event
-        </h1>
+        <Fragment>
+            <PostDraftProvider activeItem={props.activeItem}/>
+        </Fragment>
     )
 }
 
-export default PartyTab;
+export default EventTab;

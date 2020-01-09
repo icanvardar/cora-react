@@ -3,7 +3,7 @@ import './App.css';
 
 import Context from './utils/Context';
 
-import {tokenGatherer, usernameGatherer} from './helper/cookieHandler';
+import {tokenGatherer, usernameGatherer, userIdGatherer} from './helper/cookieHandler';
 
 import { Router, Switch, Route } from 'react-router-dom';
 import { CookiesProvider, withCookies } from 'react-cookie';
@@ -21,7 +21,7 @@ const App = (props) => {
   }, [])
 
   return (
-    <Context.Provider value={{token: tokenGatherer(props), username: usernameGatherer(props)}}>
+    <Context.Provider value={{token: tokenGatherer(props), username: usernameGatherer(props), userId: userIdGatherer(props)}}>
       <CookiesProvider>
         <Router history={history}>
           <Switch>

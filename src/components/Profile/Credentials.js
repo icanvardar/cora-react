@@ -75,7 +75,7 @@ const Credentials = (props) => {
                             {param === "me" || param === username ?
                                 <Row center>
                                     <Col>
-                                        <Btn onClick={props.editProfile} color="white" type="submit" style={{textTransform: 'none', fontWeight: 'bold'}}>Profili Düzenle</Btn>
+                                        <Btn onClick={() => props.editProfile()} color="white" type="submit" style={{textTransform: 'none', fontWeight: 'bold'}}>Profili Düzenle</Btn>
                                     </Col>
                                 </Row>
                                 :

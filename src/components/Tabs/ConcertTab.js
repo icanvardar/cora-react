@@ -1,11 +1,16 @@
-import React from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 
-const ConcertTab = () => {
+import Context from '../../utils/Context';
+
+import PostDraftProvider from '../PostDraft/PostDraftProvider';
+
+import {getConcerts} from '../../utils/apiRequests/concert';
+
+const EventTab = (props) => {
+
     return (
-        <h1>
-            Concert
-        </h1>
+        <PostDraftProvider activeItem={props.activeItem}/>
     )
 }
 
-export default ConcertTab;
+export default EventTab;
