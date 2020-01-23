@@ -65,9 +65,8 @@ const PostDraftProvider = (props) => {
                 setRenderedPage('home');
                 getAllData(token, {pagination_number: pagNum},
                     (res) => {
-                        console.log(res.data);
+                        // console.log(res.data);
                         if (res.data.length === 0) {
-                            console.log(res.data);
                             setButtonVisibility('invisible');
                             setPostsLoading(false);
                             return setButtonMessage('Görüntülenecek içerik yok.');
@@ -83,7 +82,7 @@ const PostDraftProvider = (props) => {
                 setRenderedPage('concert');
                 getConcerts(token, {paginationNumber: pagNum, user_id: userId},
                     (res) => {
-                        console.log(res.data);
+                        // console.log(res.data);
                         if (res.data.length === 0) {
                             setButtonVisibility('invisible');
                             setPostsLoading(false);
@@ -100,7 +99,7 @@ const PostDraftProvider = (props) => {
                 setRenderedPage('event');
                 getEvents(token, {paginationNumber: pagNum, category: ""},
                     (res) => {
-                        console.log(res.data);
+                        //console.log(res.data);
                         if (res.data.length === 0) {
                             setButtonVisibility('invisible');
                             setPostsLoading(false);
@@ -117,6 +116,7 @@ const PostDraftProvider = (props) => {
                 setRenderedPage('party');
                 getParties(token, {paginationNumber: pagNum, category: ""},
                     (res) => {
+                        // console.log(res.data);
                         if (res.data.length === 0) {
                             setButtonVisibility('invisible');
                             setPostsLoading(false);
@@ -142,6 +142,7 @@ const PostDraftProvider = (props) => {
         return true;
     }
 
+    // Loads rest of another 10 digits data
     const increasePageNum = () => {
         setPagNum(pagNum + 10);
         setPostsLoading(true);
@@ -183,10 +184,6 @@ const PostDraftProvider = (props) => {
             })
     }
 
-    const comment = () => {
-        console.log('Comment it out!');
-    }
-
     return (
         <div>
             <div style={{marginTop: '20px'}}>
@@ -195,7 +192,7 @@ const PostDraftProvider = (props) => {
                     posts.map(post => 
                         renderedPage === 'profile' ?
                             // For profile posts
-                            <GeneralPostDraft key={post._id} post={post} like={like} comment={comment} credentials={props.credentials}/>
+                            <GeneralPostDraft key={post._id} post={post} like={like} credentials={props.credentials}/>
                         :
                         renderedPage === 'concert' ?
                             // For concert posts
@@ -203,10 +200,10 @@ const PostDraftProvider = (props) => {
                         :
                         renderedPage === 'event' || renderedPage === 'party' ?
                             // For event and party tab posts only
-                            <EPPostDraft key={post._id} post={post} like={like} comment={comment}/>
+                            <EPPostDraft key={post._id} post={post} like={like}/>
                         :
                         // For home tab posts
-                        <GeneralPostDraft key={post._id} post={post} like={like} comment={comment}/>
+                        <GeneralPostDraft key={post._id} post={post} like={like}/>
                     )
                         
                 }

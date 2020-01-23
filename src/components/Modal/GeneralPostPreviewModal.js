@@ -25,15 +25,18 @@ const GeneralPostPreviewModal = (props) => {
     }, [props.isOpen])
 
     useEffect(() => {
-        // To get the post creator's profile photo
-        props.isOpen === true && 
-        findUser(token, {username: post.cep_inf.produced_username},
-            (res) => {
-                setCreatorPhoto(res.data[0].profile_photo);
-            },
-            (err) => {
-                console.log(err);
-            })
+        // Concert post doesnt have creator pp then condition checks it
+        if (post.cep_inf.tur !== 'Concert') {
+            props.isOpen === true && 
+            // To get the post creator's profile photo
+            findUser(token, {username: post.cep_inf.produced_username},
+                (res) => {
+                    setCreatorPhoto(res.data[0].profile_photo);
+                },
+                (err) => {
+                    console.log(err);
+                })
+        }
     }, [props.isOpen])
 
     useEffect(() => {

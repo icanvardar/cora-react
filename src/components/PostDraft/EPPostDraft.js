@@ -10,9 +10,11 @@ import {Link} from 'react-router-dom';
 
 import JoinedUsersModal from '../Modal/JoinedUsersModal';
 import EPPostPreviewModal from '../Modal/EPPostPreviewModal';
+import CommentModal from '../Modal/CommentModal';
 
 import {isIt, deleteLike} from '../../utils/apiRequests/connectionUser/like';
 import {joinCEP} from '../../utils/apiRequests/connectionUser/alldata';
+import {count} from '../../utils/apiRequests/connectionUser/comment';
 
 import Context from '../../utils/Context';
 
@@ -27,6 +29,10 @@ const PostDraft = (props) => {
 
     const [joining, setJoining] = useState();
     const [userCount, setUserCount] = useState(props.post.user_Count);
+    const [commentCount, setCommentCount] = useState(0);
+
+    // These both states are for comment modal
+    const [commentModal, setCommentModal] = useState(false);
     
     // Fixes double click problem
     useEffect(() => {
@@ -44,7 +50,21 @@ const PostDraft = (props) => {
 
     useEffect(() => {
         isLiked(post.join_inf[0].ucAlldata_id);
+
+        count(token, {
+            ucAlldata_id: post.join_inf[0].ucAlldata_id
+        },
+            (res) => {
+                setCommentCount(res.data);
+            },
+            (err) => {
+                console.log(err);
+            })
     }, [])
+
+    useEffect(() => {
+        if (commentModal) setCommentModal(false);
+    }, [commentModal])
 
     const isLiked = (ucAlldata_id) => {
         isIt(token, {ucAlldata_id},
@@ -79,6 +99,11 @@ const PostDraft = (props) => {
         }
     }
 
+    const comment = () => {
+        if (commentModal) setCommentModal(false)
+        else if (!commentModal) setCommentModal(true)
+    }
+
     return (
         <Fragment>
             <Col className="d-none d-md-block mt-2" size="6">
@@ -111,7 +136,7 @@ const PostDraft = (props) => {
                         
                         <Row between className={classes.cardbottomdiv}>
                             <Col size="2"><MDBIcon onClick={() => setUsersOpen(!usersOpen)} icon="users" /><span style={{marginLeft: '5px'}}>{userCount}</span></Col>
-                            <Col onClick={() => props.comment()} size="2"><MDBIcon icon="comment" /><span className={classes.cardbottombutton}>{post.comment_count}</span></Col>
+                            <Col onClick={() => comment()} size="2"><MDBIcon icon="comment" /><span className={classes.cardbottombutton}>{commentCount}</span></Col>
                             <Col onClick={async () => {
                                 props.like(post.join_inf[0].ucAlldata_id, post.produced_id.username, post.produced_id._id, post.tur)
                                 likeSupervisor(color);
@@ -144,7 +169,7 @@ const PostDraft = (props) => {
                         
                         <div className={mobileClasses.cardbottomdiv}>
                             <div className={mobileClasses.cardbottombuttondiv}><MDBIcon onClick={() => setUsersOpen(!usersOpen)} icon="users" /><span style={{marginLeft: '5px'}}>{userCount}</span></div>
-                            <div className={mobileClasses.cardbottombuttondiv}><MDBIcon className={mobileClasses.cardbottombutton} onClick={() => props.comment()}icon="comment" />{post.comment_count}</div>
+                            <div className={mobileClasses.cardbottombuttondiv}><MDBIcon className={mobileClasses.cardbottombutton} onClick={() => comment()}icon="comment" />{commentCount}</div>
                             <div><MDBIcon style={{color: color}} className={mobileClasses.cardbottombutton} onClick={() => {
                                 props.like(post.join_inf[0].ucAlldata_id, post.produced_id.username, post.produced_id._id, post.tur)
                                 likeSupervisor(color);
@@ -157,6 +182,8 @@ const PostDraft = (props) => {
 
             <EPPostPreviewModal isOpen={isOpen} post={post} checkJoin={checkJoin}/>
             <JoinedUsersModal isOpen={usersOpen} id={post._id}/>
+            <CommentModal isOpen={commentModal} ucAlldata_id={post.join_inf[0].ucAlldata_id} ownpost_id={post.produced_id._id} type_CEP={post.tur}/>
+            
         </Fragment>
     )
 }
