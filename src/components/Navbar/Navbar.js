@@ -10,12 +10,13 @@ import classes from './Navbar.module.css';
 import { withCookies, useCookies } from "react-cookie";
 
 const Navbar = (props) => {
-  const {token} = useContext(Context);
+  const {token, username} = useContext(Context);
   const [searchOpen, setSearchOpen] = useState(false);
   const [cookies, setCookie, removeCookie] = useCookies();
 
   const logOut = async () => {
     removeCookie('SESSION_ID');
+    removeCookie('USER_ID');
     removeCookie('username');
     history.push('/');
   } 
@@ -87,6 +88,7 @@ const Navbar = (props) => {
                       
                       <MDBDropdownMenu right basic className="dropdown-default">
                           <MDBDropdownItem href="/profile/me">Profil</MDBDropdownItem>
+                          <MDBDropdownItem href={`/settings`}>Ayarlar</MDBDropdownItem>
                           <MDBDropdownItem onClick={() => logOut()}>Çıkış Yap</MDBDropdownItem>
                       </MDBDropdownMenu>
                   </MDBDropdown>

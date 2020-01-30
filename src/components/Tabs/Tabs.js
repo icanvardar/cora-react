@@ -18,11 +18,11 @@ const Tabs = ({location, match}) => {
     const [activeItem, setActiveItem] = useState(
         location.pathname === "/" ? "1"
         :
-        params.posts === "concerts" ? "2"
+        location.pathname === "/concerts" ? "2"
         :
-        params.posts === "events" ? "3"
+        location.pathname === "/events" ? "3"
         :
-        params.posts = "parties" ? "4"
+        location.pathname === "/parties" ? "4"
         :
         ""
     );
