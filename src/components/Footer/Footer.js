@@ -7,7 +7,7 @@ const Footer = () => {
         <MDBFooter className="fixed-bottom" color="black" style={{borderTop: '1px solid #6A86F4'}} className="font-small pt-4 mt-4">
           <MDBContainer fluid className="text-center text-md-left">
             <Row center style={{textAlign: 'center'}}>
-                <Col md="2">
+                <Col className="d-none d-md-block mt-2" md="2">
                     <h1>Cora</h1>
                     <ul>
                         <li className="list-unstyled">
@@ -27,7 +27,7 @@ const Footer = () => {
                 <Col md="2">
                     <img src={require('../../assets/images/cora-logo.png')} alt="cora-logo"></img>
                 </Col>
-                <Col md="2">
+                <Col className="d-none d-md-block mt-2" md="2">
                     <h1>Cora</h1>
                     <ul>
                         <li className="list-unstyled">

@@ -7,20 +7,12 @@ import { BrowserRouter as Router } from 'react-router-dom';
 
 import {history} from '../../App';
 import classes from './Navbar.module.css';
-import { withCookies, useCookies } from "react-cookie";
 
 const Navbar = (props) => {
   const {token, username} = useContext(Context);
   const [searchOpen, setSearchOpen] = useState(false);
-  const [cookies, setCookie, removeCookie] = useCookies();
 
-  const logOut = async () => {
-    removeCookie('SESSION_ID');
-    removeCookie('USER_ID');
-    removeCookie('username');
-    history.push('/');
-  } 
-
+  
   return (
     <Router>
       <MDBNavbar className={classes.navbar} color="black" dark expand="md">
@@ -89,7 +81,7 @@ const Navbar = (props) => {
                       <MDBDropdownMenu right basic className="dropdown-default">
                           <MDBDropdownItem href="/profile/me">Profil</MDBDropdownItem>
                           <MDBDropdownItem href={`/settings`}>Ayarlar</MDBDropdownItem>
-                          <MDBDropdownItem onClick={() => logOut()}>Çıkış Yap</MDBDropdownItem>
+                          {/* <MDBDropdownItem onClick={() => logOut()}>Çıkış Yap</MDBDropdownItem> */}
                       </MDBDropdownMenu>
                   </MDBDropdown>
                 </MDBNavItem>
@@ -126,4 +118,4 @@ const Navbar = (props) => {
   
 }
 
-export default withCookies(Navbar);
+export default Navbar;

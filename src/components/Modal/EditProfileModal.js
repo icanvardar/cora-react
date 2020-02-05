@@ -106,17 +106,17 @@ const EditProfileModal = (props) => {
                     </Row>
                     <Row>
                         <Col>
-                            <MDBInput hint={`${userData.name}`} onChange={(e) => setName(e.target.value)} label="Ad" />
+                            <MDBInput style={{color: 'white'}} hint={`${userData.name}`} onChange={(e) => setName(e.target.value)} label="Ad" />
                         </Col>
                     </Row>
                     <Row>
                         <Col>
-                            <MDBInput hint={`${userData.surname}`} onChange={(e) => setSurname(e.target.value)} label="Soyad" />
+                            <MDBInput style={{color: 'white'}}  hint={`${userData.surname}`} onChange={(e) => setSurname(e.target.value)} label="Soyad" />
                         </Col>
                     </Row>
                     <Row>
                         <Col>
-                            <MDBInput hint={`${userData.username}`} onChange={(e) => setUsername(e.target.value)} label="Kullanıcı Adı" />
+                            <MDBInput style={{color: 'white'}}  hint={`${userData.username}`} onChange={(e) => setUsername(e.target.value)} label="Kullanıcı Adı" />
                         </Col>
                     </Row>
                     <Row between style={{textAlign: 'center'}}>
@@ -127,7 +127,7 @@ const EditProfileModal = (props) => {
                             <p>open.spotify.com/user/</p>
                         </Col>
                         <Col size="4" style={{marginLeft: '50px', marginTop: '2px'}}>
-                            <MDBInput hint={`${userData.spotifyUsername}`} onChange={(e) => setSpotifyUsername(e.target.value)} label="Kullanıcı Adı" />
+                            <MDBInput style={{color: 'white'}} hint={`${userData.spotifyUsername}`} onChange={(e) => setSpotifyUsername(e.target.value)} label="Kullanıcı Adı" />
                         </Col>
                     </Row>
                     <Row between style={{textAlign: 'center'}}>
@@ -138,7 +138,7 @@ const EditProfileModal = (props) => {
                             <p>www.instagram.com/</p>
                         </Col>
                         <Col size="4" style={{marginLeft: '50px', marginTop: '2px'}}>
-                            <MDBInput hint={`${userData.instagramUsername}`} onChange={(e) => setInstagramUsername(e.target.value)} label="Kullanıcı Adı" />
+                            <MDBInput style={{color: 'white'}} hint={`${userData.instagramUsername}`} onChange={(e) => setInstagramUsername(e.target.value)} label="Kullanıcı Adı" />
                         </Col>
                     </Row>
                     <Row between style={{textAlign: 'center'}}>
@@ -149,7 +149,7 @@ const EditProfileModal = (props) => {
                             <p>www.twitter.com/</p>
                         </Col>
                         <Col size="4" style={{marginLeft: '50px', marginTop: '2px'}}>
-                            <MDBInput hint={`${userData.twitterUsername}`} onChange={(e) => setTwitterUsername(e.target.value)} label="Kullanıcı Adı" />
+                            <MDBInput style={{color: 'white'}} hint={`${userData.twitterUsername}`} onChange={(e) => setTwitterUsername(e.target.value)} label="Kullanıcı Adı" />
                         </Col>
                     </Row>
                     <Row style={{textAlign: 'center', marginTop: '10px', marginBottom: '25px'}}>

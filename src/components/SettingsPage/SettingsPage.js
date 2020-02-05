@@ -6,12 +6,24 @@ import UniversityCredentials from './UniversityCredentials';
 import BlockUser from './BlockUser';
 import Contact from './Contact';
 
+import {history} from '../../App';
+
+import { withCookies, useCookies } from "react-cookie";
+
 const SettingsPage = () => {
+    const [cookies, setCookie, removeCookie] = useCookies();
     const [page, setPage] = useState(0);
 
     const pageChanger = (pageNum) => {
         setPage(pageNum)
     }
+
+    const logOut = async () => {
+        removeCookie('SESSION_ID');
+        removeCookie('USER_ID');
+        removeCookie('username');
+        history.push('/');
+      }     
 
     return (
         <Fragment>
@@ -20,16 +32,16 @@ const SettingsPage = () => {
                     <Card style={{backgroundColor: '#151515', color: 'white', marginTop: '20px'}}>
                         <CardBody>
                             <Row>
-                                <Col md="3" style={{borderRight: '0.5px solid white', textAlign: 'center'}}>
+                                <Col md="4" style={{borderRight: '0.5px solid white', textAlign: 'center'}}>
                                     <div style={{display: 'flex', flexDirection: 'column'}}>
                                         <Btn size="sm" color="white" style={{textTransform: 'none', fontWeight: 'bold'}} onClick={() => pageChanger(1)}>Şifre Değiştir</Btn>
                                         <Btn size="sm" color="white" style={{textTransform: 'none', fontWeight: 'bold'}} onClick={() => pageChanger(2)}>Üniversite Bilgileri</Btn>
                                         <Btn size="sm" color="white" style={{textTransform: 'none', fontWeight: 'bold'}} onClick={() => pageChanger(3)}>Hesap Engelle</Btn>
                                         <Btn size="sm" color="white" style={{textTransform: 'none', fontWeight: 'bold'}} onClick={() => pageChanger(4)}>İletişim</Btn>
-                                        <Btn size="sm" color="white" style={{textTransform: 'none', fontWeight: 'bold'}}>Çıkış Yap</Btn>
+                                        <Btn size="sm" color="white" onClick={() => logOut()} style={{textTransform: 'none', fontWeight: 'bold'}}>Çıkış Yap</Btn>
                                     </div>
                                 </Col>
-                                <Col md="4">
+                                <Col md="5">
                                     {
                                         page === 1 ? <ChangePassword />
                                         :
@@ -74,7 +86,7 @@ const SettingsPage = () => {
                                         <Btn size="sm" color="white" style={{textTransform: 'none', fontWeight: 'bold'}} onClick={() => pageChanger(2)}>Üniversite Bilgileri</Btn>
                                         <Btn size="sm" color="white" style={{textTransform: 'none', fontWeight: 'bold'}} onClick={() => pageChanger(3)}>Hesap Engelle</Btn>
                                         <Btn size="sm" color="white" style={{textTransform: 'none', fontWeight: 'bold'}} onClick={() => pageChanger(4)}>İletişim</Btn>
-                                        <Btn size="sm" color="white" style={{textTransform: 'none', fontWeight: 'bold'}}>Çıkış Yap</Btn>
+                                        <Btn size="sm" color="white" onClick={() => logOut()} style={{textTransform: 'none', fontWeight: 'bold'}}>Çıkış Yap</Btn>
                                     </div>
                                 </Col>
                             </Row>
@@ -86,4 +98,4 @@ const SettingsPage = () => {
     )
 }
 
-export default SettingsPage;
+export default withCookies(SettingsPage);

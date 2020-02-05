@@ -200,7 +200,7 @@ const EditProfileModal = (props) => {
                         <Btn className={buttonVisibility} onClick={() => increasePageNum()} style={{textTransform: 'none'}} size="sm" color="white">Daha Fazla</Btn>
                     </div>
                     <form onSubmit={(e) => sendComment(e)}>
-                        <MDBInput type="textarea" label="Yorumunuzu giriniz..." rows="2" onChange={(e) => {
+                        <MDBInput style={{color: 'white'}} type="textarea" label="Yorumunuzu giriniz..." rows="2" onChange={(e) => {
                             setComment(e.target.value);
                         }} />
                         <Row style={{textAlign: 'center', marginTop: '10px', marginBottom: '25px'}}>
