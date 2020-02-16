@@ -3,6 +3,7 @@ import {Route} from 'react-router-dom';
 import Navbar from '../components/Navbar/Navbar';
 import Footer from '../components/Footer/Footer';
 import ProfilePage from '../components/Profile/ProfilePage';
+import UserSearchPage from '../components/UserSearchPage/UserSearchPage';
 import SettingsPage from '../components/SettingsPage/SettingsPage';
 import ProtectedRoute from '../helper/ProtectedRoute';
 
@@ -34,6 +35,10 @@ const DefaultContainer = (props) => (
 
       <Route path="/parties" render={(props) => (
         <Tabs {...props} />
+      )}></Route>
+
+      <Route path="/find/:username" render={(props) => (
+        <UserSearchPage {...props}/>
       )}></Route>
 
       <ProtectedRoute path="/settings" component={() => <SettingsPage />}></ProtectedRoute>

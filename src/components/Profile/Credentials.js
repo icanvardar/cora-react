@@ -83,10 +83,10 @@ const Credentials = (props) => {
                                     <Col>
                                         <Btn onClick={() => {
                                             if (!isFollowing) {
-                                                props.follow(credentials._id, credentials.username);
+                                                props.follow(credentials._id, username);
                                                 setSpinnerActive(true);
                                             } else if (isFollowing) {
-                                                props.unfollow(credentials._id, credentials.username);
+                                                props.unfollow(credentials._id, username);
                                                 setSpinnerActive(true);
                                             }
                                         }} color="white" type="submit" style={{textTransform: 'none', fontWeight: 'bold'}}>

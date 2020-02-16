@@ -83,10 +83,10 @@ const CredentialsMobile = (props) => {
                                     <Col>
                                         <Btn onClick={() => {
                                             if (!isFollowing) {
-                                                props.follow(credentials._id, credentials.username);
+                                                props.follow(credentials._id, username);
                                                 setSpinnerActive(true);
                                             } else if (isFollowing) {
-                                                props.unfollow(credentials._id, credentials.username);
+                                                props.unfollow(credentials._id, username);
                                                 setSpinnerActive(true);
                                             }
                                         }} color="white" size="sm" type="submit" style={{textTransform: 'none', width: '100%', fontWeight: 'bold'}}>

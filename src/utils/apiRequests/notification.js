@@ -50,3 +50,13 @@ export const addComments = async (token, data, callback, errorcallback) => {
       errorcallback !== null && errorcallback(err)
     })
 }
+
+export const findNotification = async (token, data, callback, errorcallback) => {
+  await axios.post(`${process.env.REACT_APP_BASE_URL}/api/notifications/find`, data, headerSetter(token))
+    .then(res => {
+      callback !== null && callback(res)
+    })
+    .catch(err => {
+      errorcallback !== null && errorcallback(err)
+    })
+}

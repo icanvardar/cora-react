@@ -140,7 +140,7 @@ const PostDraft = (props) => {
                             <Col onClick={() => comment()} size="2"><MDBIcon icon="comment" /><span className={classes.cardbottombutton}>{commentCount}</span></Col>
                             <Col onClick={async () => {
                                 if (credentials) {
-                                    props.like(post._id, credentials.username, post.user_id, post.tur)
+                                    props.like(post._id, username, post.user_id, post.tur)
                                     likeSupervisor(color);
                                 } else {
                                     props.like(post._id, post.user_id.username, post.user_id, post.tur)

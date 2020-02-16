@@ -138,7 +138,7 @@ const PostDraft = (props) => {
                             <Col size="2"><MDBIcon onClick={() => setUsersOpen(!usersOpen)} icon="users" /><span style={{marginLeft: '5px'}}>{userCount}</span></Col>
                             <Col onClick={() => comment()} size="2"><MDBIcon icon="comment" /><span className={classes.cardbottombutton}>{commentCount}</span></Col>
                             <Col onClick={async () => {
-                                props.like(post.join_inf[0].ucAlldata_id, post.produced_id.username, post.produced_id._id, post.tur)
+                                props.like(post.join_inf[0].ucAlldata_id, username, post.produced_id._id, post.tur)
                                 likeSupervisor(color);
                             }} size="2"><MDBIcon style={{color: color}} icon="heart" /><span className={classes.cardbottombutton}>{likeCount}</span></Col>
                         </Row>
