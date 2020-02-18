@@ -90,12 +90,13 @@ const Navbar = (props) => {
                           {
                             userSearchText && searchBoxClicked === true && 
                             <div style={{position: 'absolute', backgroundColor: 'white', overflow: 'auto', zIndex: '1000', borderRadius: '5px', width: '200px', height: '180px', padding: '5px'}}>
-                              <h5 style={{marginLeft: '5px'}}>Sonuçlar</h5>
+                              
                               {
                                 searchResult.length === 0 ?
                                 <p style={{marginLeft: '5px'}}>Kullanıcı bulunamadı.</p>
                                 :
                                 <div>
+                                  <h5 style={{marginLeft: '5px'}}>Sonuçlar</h5>
                                   {
                                     searchResult.map((user) =>
                                     <a key={user._id} href={`/profile/${user.username}`}>
