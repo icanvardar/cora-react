@@ -22,19 +22,16 @@ const EditProfileModal = (props) => {
     const [instagramUsername, setInstagramUsername] = useState('');
     const [twitterUsername, setTwitterUsername] = useState('');
 
-    const [image, setImage] = useState();
+    const [image, setImage] = useState(null);
 
-    useEffect(() => {
-        console.log(image);
+    const imageGetter = (e) => {
+        console.log(e[0] || e.target.files[0]);
 
-        axios.post('https://cora-photo-server.herokuapp.com/images/upload', image)
-        .then(res => {
-            console.log(res);
-        })  
-        .catch(err => {
-            console.log(err);
-        }) 
-    }, [image])
+        const data = new FormData();
+        data.append('photo', { uri: Math.floor(Math.random() * 1000000), type: 'image/jpeg', name: Math.floor(Math.random() * 1000000) + ".jpg" });
+
+        setImage(data);
+    }
 
     useEffect(() => {
         if (props.isOpen === true) {
@@ -55,8 +52,18 @@ const EditProfileModal = (props) => {
         setIsOpen(!isOpen);
     }
 
-    const editProfile = () => {
-        let data = {};
+    const editProfile = async () => {
+        let data = image;
+        if (image) {
+            await axios.post('https://cora-photo-server.herokuapp.com/images/upload', data)
+            .then(res => {
+                console.log(res);
+            })  
+            .catch(err => {
+                console.log(err);
+            }) 
+        }
+        
         if (name) {
             data = {...data, name: name}
         } if (surname) {
@@ -74,7 +81,7 @@ const EditProfileModal = (props) => {
         update(token, data,
             (res) => {
                 console.log(res.data);
-                history.push('/profile/me');
+                // history.push('/profile/me');
             },
             (err) => {
                 console.log(err);
@@ -98,7 +105,7 @@ const EditProfileModal = (props) => {
                             <ImageUploader
                                 withIcon={true}
                                 buttonText='Resim Seç'
-                                onChange={(e) => setImage(e[0])}
+                                onChange={(e) => imageGetter(e)}
                                 imgExtension={['.jpg', '.gif', '.png', '.gif']}
                                 maxFileSize={5242880}
                             />

@@ -137,16 +137,17 @@ const Navbar = (props) => {
                             <div style={{display: 'flex', justifyContent: 'start', marginBottom: '-15px'}}>
                               <h5>Bildirimler</h5>
                             </div>
+                            <div>
                             {
                               notifications.map(notification => {
                                 if (notification.notification_username !== username) {
                                   return (
                                     <a key={notification._id} href={`/profile/${notification.notification_username}`}>
-                                      <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'start', marginBottom: '-20px'}}>
+                                      <div style={{display: 'flex', flexDirection: 'row', marginBottom: '-20px'}}>
                                         <div>
                                           <img style={{width: '25px', height: '25px', marginRight: '10px'}} src={notification.notification_photo_url} alt=""></img>
                                         </div>
-                                        <div>
+                                        <div style={{textAlign: 'start'}}>
                                           <p>{`@${notification.notification_username} ${notification.notification}`}</p>
                                         </div>
                                       </div>
@@ -155,6 +156,7 @@ const Navbar = (props) => {
                                 }
                               })
                             }
+                            </div>
                           </div>
                       </MDBDropdownMenu>
                   </MDBDropdown>
