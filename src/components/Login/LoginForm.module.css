@@ -13,3 +13,13 @@
 .link:hover {
     color: #898989;
 }
+
+.forgottenpasswordmodal {
+    background-color: #151515;
+}
+
+.modalbuttongroup {
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: row;
+}
