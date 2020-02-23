@@ -62,6 +62,8 @@ const PostDraft = (props) => {
             (err) => {
                 console.log(err);
             })
+        
+        console.log(process.env.REACT_APP_BASE_URL);
     }, [])
 
     useEffect(() => {

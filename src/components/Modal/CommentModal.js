@@ -171,7 +171,7 @@ const EditProfileModal = (props) => {
                                     {   
                                         userId === comment.user_inf._id &&
                                         <Col size="2">
-                                            <p onClick={(e) => removeComment(e, comment.comment)} style={{color: 'cyan', fontSize: '10px'}}>Kaldır</p>
+                                            <p onClick={(e) => removeComment(e, comment.comment)} style={{color: 'cyan', fontSize: '10px', cursor: "pointer"}}>X</p>
                                         </Col>
                                     }
                                 </Row>
