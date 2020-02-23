@@ -6,7 +6,6 @@ import classes from './HomeTabs.module.css';
 import Context from '../../utils/Context';
 
 import HomeTab from './HomeTab';
-import ConcertTab from './ConcertTab';
 import EventTab from './EventTab';
 import PartyTab from './PartyTab';
 
@@ -17,8 +16,6 @@ const Tabs = ({location, match}) => {
     // Configure the active item by getting param values
     const [activeItem, setActiveItem] = useState(
         location.pathname === "/" ? "1"
-        :
-        location.pathname === "/concerts" ? "2"
         :
         location.pathname === "/events" ? "3"
         :
@@ -32,8 +29,6 @@ const Tabs = ({location, match}) => {
         if (activeItem === tabName) {
             if (tabName === '1') {
                 return classes.tabselectedleft;
-            } else if (tabName === '2') {
-                return classes.tabselectedmiddle;
             } else if (tabName === '3') {
                 return classes.tabselectedmiddle;
             } else if (tabName === '4') {
@@ -57,13 +52,6 @@ const Tabs = ({location, match}) => {
                 <MDBNavLink to="/" active className={receiveSelected('1')} role="tab" >
                         <div className={tabTextChanger('1')}>
                             <MDBIcon icon="home" /> <p style={{marginTop: '-5px', marginBottom: '-5px'}}>Anasayfa</p>
-                        </div>
-                </MDBNavLink>
-            </MDBNavItem>
-            <MDBNavItem>
-                <MDBNavLink to="/concerts" active className={receiveSelected('2')} role="tab">
-                        <div className={tabTextChanger('2')}>
-                            <MDBIcon icon="music" /> <p style={{marginTop: '-5px', marginBottom: '-5px'}}>Konser</p>
                         </div>
                 </MDBNavLink>
             </MDBNavItem>
@@ -93,16 +81,6 @@ const Tabs = ({location, match}) => {
                         <h1>No content available due to bad login!</h1>
                     }
 
-                </MDBTabPane>
-                <MDBTabPane tabId="2" role="tabpanel">
-                    
-                    {
-                        token ? 
-                        <ConcertTab activeItem={activeItem}/>
-                        :
-                        <h1>No content available due to bad login!</h1>
-                    }
-                    
                 </MDBTabPane>
                 <MDBTabPane tabId="3" role="tabpanel">
                     

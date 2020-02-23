@@ -4,7 +4,6 @@ import {MDBRow as Row, MDBCol as Col, MDBAlert as Alert, MDBBtn as Btn} from 'md
 
 import GeneralPostDraft from './GeneralPostDraft';
 import EPPostDraft from './EPPostDraft';
-import ConcertPostDraft from './ConcertPostDraft';
 
 import {addLikes} from '../../utils/apiRequests/notification'
 import {isIt, deleteLike} from '../../utils/apiRequests/connectionUser/like';
@@ -13,7 +12,6 @@ import {isIt, deleteLike} from '../../utils/apiRequests/connectionUser/like';
 import {getAllData} from '../../utils/apiRequests/connectionUser/alldata';
 import {getEvents} from '../../utils/apiRequests/event';
 import {getParties} from '../../utils/apiRequests/party';
-import {getConcerts} from '../../utils/apiRequests/concert';
 
 import {getUserData} from '../../utils/apiRequests/connectionUser/alldata';
 
@@ -71,23 +69,6 @@ const PostDraftProvider = (props) => {
                             setPostsLoading(false);
                             return setButtonMessage('Görüntülenecek içerik yok.');
                         } 
-                        setPosts(posts.concat(res.data));
-                        setPostsLoading(false);
-                        setButtonVisibility('visible');
-                    },
-                    (err) => {
-                        console.log(err);
-                    })
-            } else if (activeItem === "2") {
-                setRenderedPage('concert');
-                getConcerts(token, {paginationNumber: pagNum, user_id: userId},
-                    (res) => {
-                        // console.log(res.data);
-                        if (res.data.length === 0) {
-                            setButtonVisibility('invisible');
-                            setPostsLoading(false);
-                            return setButtonMessage('Görüntülenecek içerik yok.');
-                        }
                         setPosts(posts.concat(res.data));
                         setPostsLoading(false);
                         setButtonVisibility('visible');
@@ -193,10 +174,6 @@ const PostDraftProvider = (props) => {
                         renderedPage === 'profile' ?
                             // For profile posts
                             <GeneralPostDraft key={post._id} post={post} like={like} credentials={props.credentials}/>
-                        :
-                        renderedPage === 'concert' ?
-                            // For concert posts
-                            <ConcertPostDraft key={post._id} post={post} />
                         :
                         renderedPage === 'event' || renderedPage === 'party' ?
                             // For event and party tab posts only

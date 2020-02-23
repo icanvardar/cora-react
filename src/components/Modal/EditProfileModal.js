@@ -123,7 +123,7 @@ const EditProfileModal = (props) => {
                                 imgExtension={['.jpg', '.gif', '.png', '.gif']}
                                 maxFileSize={5242880}
                                 withPreview={true}
-                                label="Resim Seçiniz"
+                                label={null}
                                 labelStyles={{ color: "black", fontWeight: "bold" }}
                             />
                         </Col>
