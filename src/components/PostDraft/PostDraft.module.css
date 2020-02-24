@@ -3,7 +3,7 @@
 }
 
 .cardcontainer {
-    height: 330px;
+    height: 380px;
     width: auto;
     margin-bottom: 25px;
 }
@@ -48,7 +48,7 @@
 
     .cardbodyphoto {
         width: 93%;
-        height: 100px;
+        height: 150px;
         object-fit: cover;
     }
 

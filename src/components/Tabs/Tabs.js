@@ -3,6 +3,8 @@ import { MDBNav, MDBNavItem, MDBNavLink, MDBIcon, MDBTabContent, MDBTabPane, MDB
 
 import classes from './HomeTabs.module.css';
 
+import {userInfToken, findUser} from '../../utils/apiRequests/userwithtoken';
+
 import Context from '../../utils/Context';
 
 import HomeTab from './HomeTab';
@@ -12,6 +14,23 @@ import PartyTab from './PartyTab';
 const Tabs = ({ location, match }) => {
     const [params, setParam] = useState(match.params);
     const { token } = useContext(Context);
+
+    const [credentials, setCredentials] = useState({});
+    const [credentialsLoading, setCredentialsLoading] = useState(true);
+
+    useEffect(() => {
+        userInfToken(token,
+            (res) => {
+                console.log(res.data);
+                const {...data} = res.data;
+                setCredentials(data);
+                setCredentialsLoading(false);
+            },
+            (err) => {
+                console.log(err);
+            }
+        );
+    }, [])
 
     // Configure the active item by getting param values
     const [activeItem, setActiveItem] = useState(
@@ -107,9 +126,39 @@ const Tabs = ({ location, match }) => {
                     </MDBTabContent>
                 </Col>
                 <Col md="3" className="d-none d-md-block mt-2">
-                    <Card style={{marginTop: '15px'}}>
+                    <Card style={{marginTop: '15px', backgroundColor: '#151515', borderRadius: '5px', color: 'white'}}>
                         <CardBody>
-                            <h1>Profile Preview</h1>
+                            <div>
+                                <img style={{width: 'inherit'}} src={credentials.profile_photo}></img>
+                            </div>
+                            <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
+                                <p>@{credentials.username}</p>
+                                <p>{`${credentials.name} ${credentials.surname}`}</p>
+                            </div>
+                            <Row center>
+                                    <Col>
+                                        <p>Konser</p>
+                                        <p className={classes.fixedtext}>{credentials.concert_Count}</p>
+                                    </Col>
+                                    <Col>
+                                        <p>Etkinlik</p>
+                                        <p className={classes.fixedtext}>{credentials.event_Count}</p>
+                                    </Col>
+                                    <Col>
+                                        <p>Parti</p>
+                                        <p className={classes.fixedtext}>{credentials.party_Count}</p>
+                                    </Col>
+                                </Row>
+                                <Row center>
+                                    <Col>
+                                        <p>Takipçi</p>
+                                        <p className={classes.fixedtext}>{credentials.follower_Count}</p>
+                                    </Col>
+                                    <Col>
+                                        <p>Takip</p>
+                                        <p className={classes.fixedtext}>{credentials.following_Count}</p>
+                                    </Col>
+                                </Row>
                         </CardBody>
                     </Card>
                 </Col>
