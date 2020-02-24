@@ -85,7 +85,7 @@ const EPPostPreviewModal = (props) => {
                     <Col xs="5" style={{marginLeft: '20px'}}>
                         {post.name}
                     </Col>
-                    <Col xs="3" onClick={() => toggle()} style={{marginRight: '20px'}}>
+                    <Col xs="3" onClick={() => toggle()} style={{marginRight: '20px', cursor: 'pointer'}}>
                         <MDBIcon icon="times" />
                     </Col>
                 </Row>

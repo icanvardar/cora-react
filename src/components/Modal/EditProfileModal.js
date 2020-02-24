@@ -108,7 +108,7 @@ const EditProfileModal = (props) => {
                 <Col xs="5" style={{ marginLeft: '20px' }}>
                     <h1>Profili Düzenle</h1>
                 </Col>
-                <Col xs="3" onClick={() => toggle()} style={{ marginRight: '20px' }}>
+                <Col xs="3" onClick={() => toggle()} style={{ marginRight: '20px', cursor: 'pointer'}}>
                     <Icon icon="times" />
                 </Col>
             </Row>

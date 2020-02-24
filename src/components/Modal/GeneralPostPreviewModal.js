@@ -103,7 +103,7 @@ const GeneralPostPreviewModal = (props) => {
                     <Col xs="5" style={{marginLeft: '20px'}}>
                         {post.cep_inf.name}
                     </Col>
-                    <Col xs="3" onClick={() => toggle()} style={{marginRight: '20px'}}>
+                    <Col xs="3" onClick={() => toggle()} style={{marginRight: '20px', cursor: 'pointer'}}>
                         <MDBIcon icon="times" />
                     </Col>
                 </Row>
