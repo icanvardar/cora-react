@@ -26,6 +26,9 @@ const EditProfileModal = (props) => {
     const [selectedFile, setSelectedFile] = useState(null);
     const [imagePreviewUrl, setImagePreviewUrl] = useState(null);
 
+    // For catching the image url
+    const [imageLink, setImageLink] = useState('');
+
     useEffect(() => {
         if (props.isOpen === true) {
             setIsOpen(props.isOpen);
@@ -37,7 +40,6 @@ const EditProfileModal = (props) => {
         console.log(userData);
     }, [props.userData])
 
-
     const fileChangedHandler = event => {
         setSelectedFile(event[0]);
 
@@ -48,7 +50,6 @@ const EditProfileModal = (props) => {
         }
 
         reader.readAsDataURL(event[0])
-
     }
 
     const submitPhoto = async () => {
@@ -58,14 +59,20 @@ const EditProfileModal = (props) => {
 
         let data = fd;
 
-        await axios.post('https://cora-photo-server.herokuapp.com/images/upload', data)
+        await axios.post(`${process.env.REACT_APP_CORA_PHOTO_SERVER_URL}`, data)
             .then(res => {
-                console.log(res);
+                console.log(res.data.imageUrl);
+                setImageLink(res.data.imageUrl);
+                console.log(imageLink);
             })
             .catch(err => {
                 console.log(err);
             })
     }
+
+    useEffect(() => {
+        submitPhoto();
+    }, [imagePreviewUrl])
 
     const toggle = () => {
         setIsOpen(!isOpen);
@@ -74,8 +81,8 @@ const EditProfileModal = (props) => {
     const editProfile = async () => {
         let data = {};
 
-        if (selectedFile !== null) {
-            await submitPhoto();
+        if (imageLink.length > 0) {
+            data = { ...data, profile_photo: imageLink}
         } if (name.length !== 0) {
             data = { ...data, name: name }
         } if (surname.length !== 0) {
@@ -94,7 +101,7 @@ const EditProfileModal = (props) => {
             update(token, data,
                 (res) => {
                     console.log(res.data);
-                    history.push('/profile/me');
+                    // history.push('/profile/me');
                 },
                 (err) => {
                     console.log(err);
