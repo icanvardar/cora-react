@@ -58,7 +58,7 @@ const Navbar = (props) => {
   
   return (
     <Router>
-      <MDBNavbar className={classes.navbar} color="black" dark expand="md">
+      <MDBNavbar fixed="top" className={classes.navbar} color="black" dark expand="md">
         <Container>   
             <MDBNavbarBrand>
               <a href="/">

@@ -7,4 +7,5 @@ html body {
 .page {
   background-color: transparent;
   min-height: 70vh;
+  margin-top: 11vh;
 }

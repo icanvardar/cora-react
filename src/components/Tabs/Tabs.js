@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { MDBNav, MDBNavItem, MDBNavLink, MDBIcon, MDBTabContent, MDBTabPane, MDBContainer as Container, MDBRow as Row, MDBCol as Col, MDBCard as Card, MDBCardBody as CardBody } from "mdbreact";
+import { MDBNav, MDBNavItem, MDBNavLink, MDBIcon, MDBTabContent, MDBTabPane, MDBContainer as Container, MDBRow as Row, MDBCol as Col, MDBCard as Card, MDBCardBody as CardBody, MDBBtn as Btn } from "mdbreact";
 
 import classes from './HomeTabs.module.css';
 
-import {userInfToken, findUser} from '../../utils/apiRequests/userwithtoken';
+import { userInfToken, findUser, topTwenty } from '../../utils/apiRequests/userwithtoken';
 
 import Context from '../../utils/Context';
 
@@ -18,11 +18,25 @@ const Tabs = ({ location, match }) => {
     const [credentials, setCredentials] = useState({});
     const [credentialsLoading, setCredentialsLoading] = useState(true);
 
+    // Holds top20 users
+    const [top20Users, setTop20Users] = useState([]);
+
     useEffect(() => {
+        topTwenty(
+            token,
+            res => {
+                setTop20Users(res.data);
+                console.log(res.data);
+            },
+            err => {
+                console.log(err);
+            }
+        );
+
         userInfToken(token,
             (res) => {
                 console.log(res.data);
-                const {...data} = res.data;
+                const { ...data } = res.data;
                 setCredentials(data);
                 setCredentialsLoading(false);
             },
@@ -126,39 +140,86 @@ const Tabs = ({ location, match }) => {
                     </MDBTabContent>
                 </Col>
                 <Col md="3" className="d-none d-md-block mt-2">
-                    <Card style={{marginTop: '15px', backgroundColor: '#151515', borderRadius: '5px', color: 'white'}}>
+                    <Card style={{ marginTop: '10px', backgroundColor: '#151515', borderRadius: '5px', color: 'white' }}>
                         <CardBody>
-                            <div>
-                                <img style={{width: 'inherit'}} src={credentials.profile_photo}></img>
+                            <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
+                                <img style={{ width: 'inherit', width: '75px', height: '75px', marginRight: '10px', borderRadius: '50%', objectFit: 'cover' }} src={credentials.profile_photo}></img>
+                                <div style={{ display: 'flex', flexDirection: 'column', marginTop: '10px' }}>
+                                    <p>@{credentials.username}</p>
+                                    <p style={{ marginTop: '-20px' }}>{`${credentials.name} ${credentials.surname}`}</p>
+                                </div>
                             </div>
-                            <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
-                                <p>@{credentials.username}</p>
-                                <p>{`${credentials.name} ${credentials.surname}`}</p>
-                            </div>
-                            <Row center>
+                            <hr></hr>
+                                <div style={{display: 'flex', justifyContent: 'center'}}>
+                                    <Btn href='/profile/me' style={{textTransform: 'none'}} size="sm" color="white">Profil</Btn>
+                                    <Btn href='/settings' style={{textTransform: 'none'}} size="sm" color="white">Ayarlar</Btn>
+                                </div>
+                            <hr></hr>
+                            <div style={{ fontSize: '12px', textAlign: 'center', marginTop: '15px' }}>
+                                <Row center>
                                     <Col>
                                         <p>Konser</p>
-                                        <p className={classes.fixedtext}>{credentials.concert_Count}</p>
+                                        <p style={{ marginTop: '-15px' }}>{credentials.concert_Count}</p>
                                     </Col>
                                     <Col>
                                         <p>Etkinlik</p>
-                                        <p className={classes.fixedtext}>{credentials.event_Count}</p>
+                                        <p style={{ marginTop: '-15px' }}>{credentials.event_Count}</p>
                                     </Col>
                                     <Col>
                                         <p>Parti</p>
-                                        <p className={classes.fixedtext}>{credentials.party_Count}</p>
+                                        <p style={{ marginTop: '-15px' }}>{credentials.party_Count}</p>
                                     </Col>
                                 </Row>
-                                <Row center>
+                                <Row center style={{ marginTop: '-5px' }}>
                                     <Col>
                                         <p>Takipçi</p>
-                                        <p className={classes.fixedtext}>{credentials.follower_Count}</p>
+                                        <p style={{ marginTop: '-15px' }}>{credentials.follower_Count}</p>
                                     </Col>
                                     <Col>
                                         <p>Takip</p>
-                                        <p className={classes.fixedtext}>{credentials.following_Count}</p>
+                                        <p style={{ marginTop: '-15px' }}>{credentials.following_Count}</p>
                                     </Col>
                                 </Row>
+                            </div>
+                        </CardBody>
+                    </Card>
+                    <Card style={{ marginTop: '10px', backgroundColor: '#151515', borderRadius: '5px', color: 'white', height: '300px'}}>
+                        <CardBody style={{overflow: 'auto'}}>
+                            <Row>
+                                {top20Users.map(user => (
+                                    <a key={user._id} href={`/profile/${user.username}`}>
+                                        <Col
+                                            style={{
+                                                display: "flex",
+                                                flexDirection: "row",
+                                                color: "white",
+                                                marginTop: "5px",
+                                                marginLeft: "5px"
+                                            }}
+                                        >
+                                            <div>
+                                                <img
+                                                    style={{ width: "35px", height: "35px" }}
+                                                    src={user.profile_photo}
+                                                    alt=""
+                                                ></img>
+                                            </div>
+                                            <div style={{ marginLeft: "20px" }}>
+                                                <div
+                                                    style={{
+                                                        display: "flex",
+                                                        flexDirection: "column",
+                                                        fontSize: "14px"
+                                                    }}
+                                                >
+                                                    <p>{user.name}</p>
+                                                    <p style={{ marginTop: "-20px" }}>@{user.username}</p>
+                                                </div>
+                                            </div>
+                                        </Col>
+                                    </a>
+                                ))}
+                            </Row>
                         </CardBody>
                     </Card>
                 </Col>
