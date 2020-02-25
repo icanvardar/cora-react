@@ -32,6 +32,8 @@ const PostDraft = (props) => {
     const [userCount, setUserCount] = useState(props.post.cep_inf.user_Count);
     const [commentCount, setCommentCount] = useState(0);
 
+    const [isReportPaneOpen, setIsReportPaneOpen] = useState(false);
+
     // useEffect(() => {
     //     console.log(post);
     // }, [post])
@@ -113,10 +115,23 @@ const PostDraft = (props) => {
             <Col className="d-none d-md-block mt-2" size="6">
                 <Card className={classes.cardcontainer} style={{backgroundColor: '#151515'}}>
                     <CardBody>
-                        <Row className={classes.cardheader}>
-                            <Col xs="1" className={classes.cardheaderphotodiv}><a href={`/profile/${props.credentials ? credentials.username : post.user_id.username}`}><img className={classes.cardheaderphoto} src={props.credentials ? credentials.profile_photo : post.user_id.profile_photo} alt=""/></a></Col>
-                            <Col xs="3" className={classes.cardheaderusername}><a href={`/profile/${props.credentials ? credentials.username : post.user_id.username}`}><p>{`@${props.credentials ? credentials.username : post.user_id.username}`}</p></a></Col>
-                            <Col xs="4" className={classes.cardheaderdate}><p>{post.cep_inf.date}</p></Col>
+                        <Row between style={{marginBottom: '-10px'}}>
+                            <Col md="6">
+                                <Row className={classes.cardheader}>
+                                    <Col xs="1" className={classes.cardheaderphotodiv}><a href={`/profile/${props.credentials ? credentials.username : post.user_id.username}`}><img className={classes.cardheaderphoto} src={props.credentials ? credentials.profile_photo : post.user_id.profile_photo} alt=""/></a></Col>
+                                    <Col xs="3" className={classes.cardheaderusername}><a href={`/profile/${props.credentials ? credentials.username : post.user_id.username}`}><p>{`@${props.credentials ? credentials.username : post.user_id.username}`}</p></a></Col>
+                                    <Col xs="4" className={classes.cardheaderdate}><p>{post.cep_inf.date}</p></Col>
+                                </Row>
+                            </Col>
+                            <Col md="2" style={{color: 'white'}}>
+                                <MDBIcon style={{cursor: 'pointer'}} onClick={() => setIsReportPaneOpen(!isReportPaneOpen)} icon="ellipsis-h" />
+                                {
+                                    isReportPaneOpen === true &&
+                                    <div style={{position: 'absolute', backgroundColor: 'white', zIndex: '1000', borderRadius: '5px', width: '100px', height: '35px', padding: '5px', marginLeft: '-75px'}}>
+                                        <p onClick={() => console.log("You've clicked report button!")} style={{color: 'black', marginLeft: '5px', cursor: 'pointer'}}>Şikayet Et</p>
+                                    </div>
+                                }
+                            </Col>
                         </Row>
                         <hr />
 
