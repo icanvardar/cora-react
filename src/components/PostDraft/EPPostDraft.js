@@ -1,31 +1,33 @@
 // This PostDraft is for post which is in PartyTab...
 
-import React, {useEffect, useState, useContext, Fragment} from 'react';
-import {MDBRow as Row, MDBCol as Col, MDBCard as Card, MDBCardBody as CardBody, MDBIcon} from 'mdbreact';
+import React, { useEffect, useState, useContext, Fragment } from 'react';
+import { MDBRow as Row, MDBCol as Col, MDBCard as Card, MDBCardBody as CardBody, MDBIcon } from 'mdbreact';
 
 import classes from './PostDraft.module.css';
 import mobileClasses from './PostDraftMobile.module.css';
 
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import JoinedUsersModal from '../Modal/JoinedUsersModal';
 import EPPostPreviewModal from '../Modal/EPPostPreviewModal';
 import CommentModal from '../Modal/CommentModal';
+import ReportModal from '../Modal/ReportModel';
 
-import {isIt, deleteLike} from '../../utils/apiRequests/connectionUser/like';
-import {joinCEP} from '../../utils/apiRequests/connectionUser/alldata';
-import {count} from '../../utils/apiRequests/connectionUser/comment';
+import { isIt, deleteLike } from '../../utils/apiRequests/connectionUser/like';
+import { joinCEP } from '../../utils/apiRequests/connectionUser/alldata';
+import { count } from '../../utils/apiRequests/connectionUser/comment';
 
 import Context from '../../utils/Context';
 
 const PostDraft = (props) => {
-    const {token, username} = useContext(Context);
-    const [credentials, setCredentials] = useState({...props.credentials});
-    const [post, setPost] = useState({...props.post});
+    const { token, username } = useContext(Context);
+    const [credentials, setCredentials] = useState({ ...props.credentials });
+    const [post, setPost] = useState({ ...props.post });
     const [color, setColor] = useState('');
     const [likeCount, setLikeCount] = useState(post.join_inf[0].like_count);
     const [isOpen, setIsOpen] = useState(false);
-    const [usersOpen, setUsersOpen] = useState(false); 
+    const [usersOpen, setUsersOpen] = useState(false);
+    const [reportModal, setReportModal] = useState(false);
 
     const [joining, setJoining] = useState();
     const [userCount, setUserCount] = useState(props.post.user_Count);
@@ -33,7 +35,9 @@ const PostDraft = (props) => {
 
     // These both states are for comment modal
     const [commentModal, setCommentModal] = useState(false);
-    
+
+    const [isReportPaneOpen, setIsReportPaneOpen] = useState(false);
+
     // Fixes double click problem
     useEffect(() => {
         if (isOpen === true) {
@@ -47,6 +51,13 @@ const PostDraft = (props) => {
             setUsersOpen(false);
         }
     }, [usersOpen])
+
+    // Fixes double click problem
+    useEffect(() => {
+        if (reportModal === true) {
+            setReportModal(false);
+        }
+    }, [reportModal])
 
     useEffect(() => {
         isLiked(post.join_inf[0].ucAlldata_id);
@@ -67,7 +78,7 @@ const PostDraft = (props) => {
     }, [commentModal])
 
     const isLiked = (ucAlldata_id) => {
-        isIt(token, {ucAlldata_id},
+        isIt(token, { ucAlldata_id },
             (res) => {
                 if (res.data === true) {
                     setColor('red');
@@ -107,12 +118,25 @@ const PostDraft = (props) => {
     return (
         <Fragment>
             <Col className="d-none d-md-block mt-2" size="6">
-                <Card className={classes.cardcontainer} style={{backgroundColor: '#151515'}}>
+                <Card className={classes.cardcontainer} style={{ backgroundColor: '#151515' }}>
                     <CardBody>
-                        <Row className={classes.cardheader}>
-                            <Col xs="1" className={classes.cardheaderphotodiv}><a href={`/profile/${post.produced_id.username}`}><img className={classes.cardheaderphoto} src={post.produced_id.profile_photo} alt=""/></a></Col>
-                            <Col xs="3" className={classes.cardheaderusername}><a href={`/profile/${post.produced_id.username}`}><p>{`@${post.produced_id.username}`}</p></a></Col>
-                            <Col xs="4" className={classes.cardheaderdate}><p>{post.date}</p></Col>
+                        <Row between style={{ marginBottom: '-5px' }}>
+                            <Col md="6">
+                                <Row className={classes.cardheader}>
+                                    <Col xs="1" className={classes.cardheaderphotodiv}><a href={`/profile/${post.produced_id.username}`}><img className={classes.cardheaderphoto} src={post.produced_id.profile_photo} alt="" /></a></Col>
+                                    <Col xs="3" className={classes.cardheaderusername}><a href={`/profile/${post.produced_id.username}`}><p>{`@${post.produced_id.username}`}</p></a></Col>
+                                    <Col xs="4" className={classes.cardheaderdate}><p>{post.date}</p></Col>
+                                </Row>
+                            </Col>
+                            <Col md="2" style={{ color: 'white' }}>
+                                <MDBIcon style={{ cursor: 'pointer' }} onClick={() => setIsReportPaneOpen(!isReportPaneOpen)} icon="ellipsis-h" />
+                                {
+                                    isReportPaneOpen === true &&
+                                    <div style={{ position: 'absolute', backgroundColor: 'white', zIndex: '1000', borderRadius: '5px', width: '100px', height: '35px', padding: '5px', marginLeft: '-75px' }}>
+                                        <p onClick={() => setReportModal(true)} style={{ color: 'black', marginLeft: '5px', cursor: 'pointer' }}>Şikayet Et</p>
+                                    </div>
+                                }
+                            </Col>
                         </Row>
                         <hr />
 
@@ -120,7 +144,7 @@ const PostDraft = (props) => {
                         <a onClick={() => setIsOpen(!isOpen)}>
                             <Row center>
                                 <Col xs="4" className={classes.cardbodyphotodiv}>
-                                    <img className={classes.cardbodyphoto} src={post.party_photo || post.event_photo} alt=""/>
+                                    <img className={classes.cardbodyphoto} src={post.party_photo || post.event_photo} alt="" />
                                 </Col>
                             </Row>
                             <Row center>
@@ -131,59 +155,59 @@ const PostDraft = (props) => {
                                 </Col>
                             </Row>
                         </a>
-                        
-                        <hr className={classes.cardhr}/>
-                        
+
+                        <hr className={classes.cardhr} />
+
                         <Row between className={classes.cardbottomdiv}>
-                            <Col size="2"><MDBIcon onClick={() => setUsersOpen(!usersOpen)} icon="users" /><span style={{marginLeft: '5px'}}>{userCount}</span></Col>
+                            <Col size="2"><MDBIcon onClick={() => setUsersOpen(!usersOpen)} icon="users" /><span style={{ marginLeft: '5px' }}>{userCount}</span></Col>
                             <Col onClick={() => comment()} size="2"><MDBIcon icon="comment" /><span className={classes.cardbottombutton}>{commentCount}</span></Col>
                             <Col onClick={async () => {
                                 props.like(post.join_inf[0].ucAlldata_id, username, post.produced_id._id, post.tur)
                                 likeSupervisor(color);
-                            }} size="2"><MDBIcon style={{color: color}} icon="heart" /><span className={classes.cardbottombutton}>{likeCount}</span></Col>
+                            }} size="2"><MDBIcon style={{ color: color }} icon="heart" /><span className={classes.cardbottombutton}>{likeCount}</span></Col>
                         </Row>
-                    </CardBody> 
+                    </CardBody>
                 </Card>
             </Col>
 
             <Col className="d-md-none" size="12">
-                <Card className={mobileClasses.cardcontainer} style={{backgroundColor: '#151515'}}>
+                <Card className={mobileClasses.cardcontainer} style={{ backgroundColor: '#151515' }}>
                     <CardBody>
                         <Row className={mobileClasses.cardheader}>
-                            <Col xs="1" className={mobileClasses.cardheaderphotodiv}><a href={`/profile/${post.produced_id.username}`}><img className={mobileClasses.cardheaderphoto} src={post.produced_id.profile_photo} alt=""/></a></Col>
+                            <Col xs="1" className={mobileClasses.cardheaderphotodiv}><a href={`/profile/${post.produced_id.username}`}><img className={mobileClasses.cardheaderphoto} src={post.produced_id.profile_photo} alt="" /></a></Col>
                             <Col xs="3" className={mobileClasses.cardheaderusername}><a href={`/profile/${post.produced_id.username}`}><p>{`@${post.produced_id.username}`}</p></a></Col>
                             <Col xs="4" className={mobileClasses.cardheaderdate}><p>{post.date}</p></Col>
                         </Row>
-                        <hr className={mobileClasses.cardhr}/>
+                        <hr className={mobileClasses.cardhr} />
 
                         <a onClick={() => setIsOpen(!isOpen)}>
                             <Row>
                                 <Col className={mobileClasses.cardbodydiv}>
-                                    <img className={mobileClasses.cardbodyphoto} src={post.party_photo || post.event_photo} alt=""/>
+                                    <img className={mobileClasses.cardbodyphoto} src={post.party_photo || post.event_photo} alt="" />
                                     <h5 className={mobileClasses.cardbodycepname}>{post.name}</h5>
                                     <p>{post.location}</p>
                                     <p className={mobileClasses.cardbodycepdate}>{post.date}</p>
                                 </Col>
                             </Row>
                         </a>
-                        
+
                         <div className={mobileClasses.cardbottomdiv}>
-                            <div className={mobileClasses.cardbottombuttondiv}><MDBIcon onClick={() => setUsersOpen(!usersOpen)} icon="users" /><span style={{marginLeft: '5px'}}>{userCount}</span></div>
-                            <div className={mobileClasses.cardbottombuttondiv}><MDBIcon className={mobileClasses.cardbottombutton} onClick={() => comment()}icon="comment" />{commentCount}</div>
-                            <div><MDBIcon style={{color: color}} className={mobileClasses.cardbottombutton} onClick={() => {
+                            <div className={mobileClasses.cardbottombuttondiv}><MDBIcon onClick={() => setUsersOpen(!usersOpen)} icon="users" /><span style={{ marginLeft: '5px' }}>{userCount}</span></div>
+                            <div className={mobileClasses.cardbottombuttondiv}><MDBIcon className={mobileClasses.cardbottombutton} onClick={() => comment()} icon="comment" />{commentCount}</div>
+                            <div><MDBIcon style={{ color: color }} className={mobileClasses.cardbottombutton} onClick={() => {
                                 props.like(post.join_inf[0].ucAlldata_id, post.produced_id.username, post.produced_id._id, post.tur)
                                 likeSupervisor(color);
                             }} icon="heart" />{likeCount}</div>
                         </div>
 
-                    </CardBody> 
+                    </CardBody>
                 </Card>
             </Col>
 
-            <EPPostPreviewModal isOpen={isOpen} post={post} checkJoin={checkJoin}/>
-            <JoinedUsersModal isOpen={usersOpen} id={post._id}/>
-            <CommentModal isOpen={commentModal} ucAlldata_id={post.join_inf[0].ucAlldata_id} ownpost_id={post.produced_id._id} type_CEP={post.tur}/>
-            
+            <EPPostPreviewModal isOpen={isOpen} post={post} checkJoin={checkJoin} />
+            <JoinedUsersModal isOpen={usersOpen} id={post._id} />
+            <CommentModal isOpen={commentModal} ucAlldata_id={post.join_inf[0].ucAlldata_id} ownpost_id={post.produced_id._id} type_CEP={post.tur} />
+            <ReportModal isOpen={reportModal} ucAlldata_id={post.join_inf[0].ucAlldata_id} />
         </Fragment>
     )
 }

@@ -11,6 +11,7 @@ import {Link} from 'react-router-dom';
 import GeneralPostPreviewModal from '../Modal/GeneralPostPreviewModal';
 import JoinedUsersModal from '../Modal/JoinedUsersModal';
 import CommentModal from '../Modal/CommentModal';
+import ReportModal from '../Modal/ReportModel';
 
 import {isIt, deleteLike} from '../../utils/apiRequests/connectionUser/like';
 import {joinCEP} from '../../utils/apiRequests/connectionUser/alldata';
@@ -27,6 +28,7 @@ const PostDraft = (props) => {
     const [isOpen, setIsOpen] = useState(false);
     const [usersOpen, setUsersOpen] = useState(false);
     const [commentModal, setCommentModal] = useState(false);
+    const [reportModal, setReportModal] = useState(false);
 
     const [joining, setJoining] = useState();
     const [userCount, setUserCount] = useState(props.post.cep_inf.user_Count);
@@ -34,9 +36,9 @@ const PostDraft = (props) => {
 
     const [isReportPaneOpen, setIsReportPaneOpen] = useState(false);
 
-    // useEffect(() => {
-    //     console.log(post);
-    // }, [post])
+    useEffect(() => {
+        console.log(post);
+    }, [post])
 
     // Fixes double click problem
     useEffect(() => {
@@ -51,6 +53,13 @@ const PostDraft = (props) => {
             setUsersOpen(false);
         }
     }, [usersOpen])
+
+    // Fixes double click problem
+    useEffect(() => {
+        if (reportModal === true) {
+            setReportModal(false);
+        }
+    }, [reportModal])
 
     useEffect(() => {
         isLiked(post._id);
@@ -115,7 +124,7 @@ const PostDraft = (props) => {
             <Col className="d-none d-md-block mt-2" size="6">
                 <Card className={classes.cardcontainer} style={{backgroundColor: '#151515'}}>
                     <CardBody>
-                        <Row between style={{marginBottom: '-10px'}}>
+                        <Row between style={{marginBottom: '-5px'}}>
                             <Col md="6">
                                 <Row className={classes.cardheader}>
                                     <Col xs="1" className={classes.cardheaderphotodiv}><a href={`/profile/${props.credentials ? credentials.username : post.user_id.username}`}><img className={classes.cardheaderphoto} src={props.credentials ? credentials.profile_photo : post.user_id.profile_photo} alt=""/></a></Col>
@@ -128,7 +137,7 @@ const PostDraft = (props) => {
                                 {
                                     isReportPaneOpen === true &&
                                     <div style={{position: 'absolute', backgroundColor: 'white', zIndex: '1000', borderRadius: '5px', width: '100px', height: '35px', padding: '5px', marginLeft: '-75px'}}>
-                                        <p onClick={() => console.log("You've clicked report button!")} style={{color: 'black', marginLeft: '5px', cursor: 'pointer'}}>Şikayet Et</p>
+                                        <p onClick={() => setReportModal(true)} style={{color: 'black', marginLeft: '5px', cursor: 'pointer'}}>Şikayet Et</p>
                                     </div>
                                 }
                             </Col>
@@ -210,6 +219,7 @@ const PostDraft = (props) => {
             <GeneralPostPreviewModal isOpen={isOpen} post={post} checkJoin={checkJoin}/>
             <JoinedUsersModal isOpen={usersOpen} id={post.cep_id}/>
             <CommentModal isOpen={commentModal} ucAlldata_id={post._id} ownpost_id={post.user_id._id} type_CEP={post.cep_inf.tur}/>
+            <ReportModal isOpen={reportModal} ucAlldata_id={post._id}></ReportModal>
         </Fragment>
     )
 }

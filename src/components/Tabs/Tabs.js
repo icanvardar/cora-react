@@ -5,6 +5,7 @@ import classes from './HomeTabs.module.css';
 
 import { userInfToken, findUser, topTwenty } from '../../utils/apiRequests/userwithtoken';
 
+import {history} from '../../App';
 import Context from '../../utils/Context';
 
 import HomeTab from './HomeTab';
@@ -20,6 +21,24 @@ const Tabs = ({ location, match }) => {
 
     // Holds top20 users
     const [top20Users, setTop20Users] = useState([]);
+
+    // Configure the active item by getting param values
+    const [activeItem, setActiveItem] = useState(
+        location.pathname === "/" ? "1"
+            :
+            location.pathname === "/events" ? "3"
+                :
+                location.pathname === "/parties" ? "4"
+                    :
+                    ""
+    );
+
+    // Checks if user have account
+    useEffect(() => {
+        if (!token) {
+            history.push('/login');
+        }
+    }, [])
 
     useEffect(() => {
         topTwenty(
@@ -46,17 +65,6 @@ const Tabs = ({ location, match }) => {
         );
     }, [])
 
-    // Configure the active item by getting param values
-    const [activeItem, setActiveItem] = useState(
-        location.pathname === "/" ? "1"
-            :
-            location.pathname === "/events" ? "3"
-                :
-                location.pathname === "/parties" ? "4"
-                    :
-                    ""
-    );
-
     // For styling selected items
     const receiveSelected = (tabName) => {
         if (activeItem === tabName) {
@@ -77,6 +85,7 @@ const Tabs = ({ location, match }) => {
             return classes.tabtextdefault;
         }
     }
+
 
     return (
         <Container className="page">
