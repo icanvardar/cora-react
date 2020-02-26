@@ -192,7 +192,7 @@ const EPPostPreviewModal = (props) => {
                             </Row>
                             <Row start style={{marginLeft: '5px', marginBottom: '-15px'}}>
                                 <Col xs="2" style={{marginRight: '5px'}}>
-                                    <img style={{borderRadius: '50%', height: '25px', width: 'auto'}} src={post.produced_id.profile_photo}></img>
+                                    <MDBIcon style={{color: 'gold', position: 'absolute', marginLeft: '3px', marginTop: '-10px'}} icon="crown" /><img style={{borderRadius: '50%', height: '25px', width: 'auto'}} src={post.produced_id.profile_photo}></img>
                                 </Col>
                                 <Col xs="2">
                                     <a href={`/profile/${post.produced_id.username}`}><p style={{fontSize: '13px'}}>{`@${post.produced_id.username}`}</p></a>

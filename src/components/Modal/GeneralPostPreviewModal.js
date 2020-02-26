@@ -215,7 +215,7 @@ const GeneralPostPreviewModal = (props) => {
                                 post.cep_inf.produced_username &&
                                 <Row start style={{marginLeft: '5px', marginBottom: '-15px'}}>
                                     <Col xs="2" style={{marginRight: '5px'}}>
-                                        <img style={{borderRadius: '50%', height: '25px', width: 'auto'}} src={creatorPhoto}></img>
+                                        <MDBIcon style={{color: 'gold', position: 'absolute', marginLeft: '3px', marginTop: '-10px'}} icon="crown" /><img style={{borderRadius: '50%', height: '25px', width: 'auto'}} src={creatorPhoto}></img>
                                     </Col>
                                     <Col xs="2">
                                         <a href={`/profile/${post.cep_inf.produced_username}`}><p style={{fontSize: '13px'}}>{`@${post.cep_inf.produced_username}`}</p></a>

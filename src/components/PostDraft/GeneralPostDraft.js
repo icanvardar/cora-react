@@ -36,7 +36,16 @@ const PostDraft = (props) => {
 
     const [isReportPaneOpen, setIsReportPaneOpen] = useState(false);
 
+    // To define whether user is owner of post or not
+    const [isUserOwner, setIsUserOwner] = useState(false);
+
     useEffect(() => {
+        if (post.user_id._id) {
+            post.user_id._id === post.cep_inf.produced_id && setIsUserOwner(true);
+        }
+        if (post.user_id) {
+            post.user_id === post.cep_inf.produced_id && setIsUserOwner(true);
+        }
         console.log(post);
     }, [post])
 
@@ -74,7 +83,6 @@ const PostDraft = (props) => {
                 console.log(err);
             })
         
-        console.log(process.env.REACT_APP_BASE_URL);
     }, [])
 
     useEffect(() => {
@@ -127,7 +135,12 @@ const PostDraft = (props) => {
                         <Row between style={{marginBottom: '-5px'}}>
                             <Col md="6">
                                 <Row className={classes.cardheader}>
-                                    <Col xs="1" className={classes.cardheaderphotodiv}><a href={`/profile/${props.credentials ? credentials.username : post.user_id.username}`}><img className={classes.cardheaderphoto} src={props.credentials ? credentials.profile_photo : post.user_id.profile_photo} alt=""/></a></Col>
+                                    {
+                                        isUserOwner === false ? 
+                                        <Col xs="1" className={classes.cardheaderphotodiv}><a href={`/profile/${props.credentials ? credentials.username : post.user_id.username}`}><img className={classes.cardheaderphoto} src={props.credentials ? credentials.profile_photo : post.user_id.profile_photo} alt=""/></a></Col>
+                                        :
+                                        <Col xs="1" className={classes.cardheaderphotodiv}><a href={`/profile/${props.credentials ? credentials.username : post.user_id.username}`}><MDBIcon style={{color: 'gold', position: 'absolute', marginLeft: '7px', marginTop: '-5px'}} icon="crown" /><img className={classes.cardheaderphoto} src={props.credentials ? credentials.profile_photo : post.user_id.profile_photo} alt=""/></a></Col> 
+                                    }
                                     <Col xs="3" className={classes.cardheaderusername}><a href={`/profile/${props.credentials ? credentials.username : post.user_id.username}`}><p>{`@${props.credentials ? credentials.username : post.user_id.username}`}</p></a></Col>
                                     <Col xs="4" className={classes.cardheaderdate}><p>{post.cep_inf.date}</p></Col>
                                 </Row>
@@ -182,7 +195,12 @@ const PostDraft = (props) => {
                 <Card className={mobileClasses.cardcontainer} style={{backgroundColor: '#151515'}}>
                     <CardBody>
                         <Row className={mobileClasses.cardheader}>
-                            <Col xs="1" className={mobileClasses.cardheaderphotodiv}><a href={`/profile/${props.credentials ? credentials.username : post.user_id.username}`}><img className={mobileClasses.cardheaderphoto} src={props.credentials ? credentials.profile_photo : post.user_id.profile_photo} alt=""/></a></Col>
+                            {
+                                isUserOwner === false ? 
+                                <Col xs="1" className={mobileClasses.cardheaderphotodiv}><a href={`/profile/${props.credentials ? credentials.username : post.user_id.username}`}><img className={mobileClasses.cardheaderphoto} src={props.credentials ? credentials.profile_photo : post.user_id.profile_photo} alt=""/></a></Col>
+                                :
+                                <Col xs="1" className={mobileClasses.cardheaderphotodiv}><a href={`/profile/${props.credentials ? credentials.username : post.user_id.username}`}><MDBIcon style={{color: 'gold', position: 'absolute', marginLeft: '7px', marginTop: '-5px'}} icon="crown" /><img className={mobileClasses.cardheaderphoto} src={props.credentials ? credentials.profile_photo : post.user_id.profile_photo} alt=""/></a></Col>
+                            }
                             <Col xs="3" className={mobileClasses.cardheaderusername}><a href={`/profile/${props.credentials ? credentials.username : post.user_id.username}`}><p>{`@${props.credentials ? credentials.username : post.user_id.username}`}</p></a></Col>
                             <Col xs="4" className={mobileClasses.cardheaderdate}><p>{post.cep_inf.date}</p></Col>
                         </Row>
