@@ -85,7 +85,7 @@ const Navbar = (props) => {
                     :
                     <Col xs="6">
                       <MDBFormInline>
-                        <div className="md-form my-0"  onClick={() => setSearchBoxClicked(true)} onMouseLeave={() => setSearchBoxClicked(false)} >
+                        <div className="md-form my-0" onClick={() => setSearchBoxClicked(true)} onMouseLeave={() => setSearchBoxClicked(false)} >
                           <input className="form-control mr-sm-2" type="text" placeholder="Ara" aria-label="Search" onChange={(e) => setUserSearchText(e.target.value)} />
                           {
                             userSearchText && searchBoxClicked === true && 
