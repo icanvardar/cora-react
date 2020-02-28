@@ -36,7 +36,7 @@ const BlockedUsersModal = props => {
   };
 
   return (
-    <Modal isOpen={isOpen}>
+    <Modal centered isOpen={isOpen}>
       <Row
         between
         style={{

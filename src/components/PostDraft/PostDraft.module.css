@@ -78,3 +78,9 @@
     .cardbottombutton {
         margin-left: 5px;
     }
+
+/* Making buttons clickable */
+
+    .buttonclickable {
+        cursor: pointer;
+    }

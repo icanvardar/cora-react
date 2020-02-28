@@ -175,8 +175,8 @@ const PostDraft = (props) => {
                         <hr className={classes.cardhr}/>
                         
                         <Row between className={classes.cardbottomdiv}>
-                            <Col size="2"><MDBIcon onClick={() => setUsersOpen(!usersOpen)} icon="users" /><span style={{marginLeft: '5px'}}>{userCount}</span></Col>
-                            <Col onClick={() => comment()} size="2"><MDBIcon icon="comment" /><span className={classes.cardbottombutton}>{commentCount}</span></Col>
+                            <Col size="2"><MDBIcon className={classes.buttonclickable} onClick={() => setUsersOpen(!usersOpen)} icon="users" /><span style={{marginLeft: '5px'}}>{userCount}</span></Col>
+                            <Col onClick={() => comment()} size="2"><MDBIcon className={classes.buttonclickable} icon="comment" /><span className={classes.cardbottombutton}>{commentCount}</span></Col>
                             <Col onClick={async () => {
                                 if (credentials) {
                                     props.like(post._id, username, post.user_id, post.tur)
@@ -185,7 +185,7 @@ const PostDraft = (props) => {
                                     props.like(post._id, post.user_id.username, post.user_id, post.tur)
                                     likeSupervisor(color);
                                 }
-                            }} size="2"><MDBIcon style={{color: color}} icon="heart" /><span className={classes.cardbottombutton}>{likeCount}</span></Col>
+                            }} size="2"><MDBIcon className={classes.buttonclickable} style={{color: color}} icon="heart" /><span className={classes.cardbottombutton}>{likeCount}</span></Col>
                         </Row>
                     </CardBody> 
                 </Card>

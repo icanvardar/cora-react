@@ -22,7 +22,7 @@ const SettingsPage = () => {
         removeCookie('SESSION_ID');
         removeCookie('USER_ID');
         removeCookie('username');
-        history.push('/');
+        history.push('/login');
       }     
 
     return (
