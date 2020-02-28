@@ -20,8 +20,8 @@ const BlockFeedbackModal = (props) => {
         <Modal isOpen={isOpen} style={{ backgroundColor: 'black' }} centered>
             <ModalHeader style={{ backgroundColor: '#151515', height: '60px', color: 'white' }} toggle={() => history.push('/settings')}>Onay</ModalHeader>
             <ModalBody style={{ backgroundColor: '#151515' }}>
-                <p>{`@${props.blockedUserUsername} adlı kullanıcıyı engellediniz.`}</p>
-                <div>
+                <p style={{marginLeft: '10px'}}>{`@${props.blockedUserUsername} adlı kullanıcıyı engellediniz. Artık bu kullanıcının profilini göremeyecek ve bildirimlerini almayacaksınız.`}</p>
+                <div style={{textAlign: 'center'}}>
                     <Btn size="sm" color="success" onClick={() => history.push('/settings')}>Tamam</Btn>
                 </div>
             </ModalBody>
