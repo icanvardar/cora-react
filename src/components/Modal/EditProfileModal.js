@@ -22,9 +22,6 @@ const EditProfileModal = (props) => {
     const [instagramUsername, setInstagramUsername] = useState('');
     const [twitterUsername, setTwitterUsername] = useState('');
 
-    // For image uploading
-    const [selectedFile, setSelectedFile] = useState(null);
-
     const [data, setData] = useState({});
 
     useEffect(() => {
@@ -52,7 +49,6 @@ const EditProfileModal = (props) => {
             .catch(err => {
                 console.log(err);
             })
-        
     }
 
     const toggle = () => {

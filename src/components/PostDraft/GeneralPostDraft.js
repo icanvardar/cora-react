@@ -194,15 +194,28 @@ const PostDraft = (props) => {
             <Col className="d-md-none" size="12">
                 <Card className={mobileClasses.cardcontainer} style={{backgroundColor: '#151515'}}>
                     <CardBody>
-                        <Row className={mobileClasses.cardheader}>
-                            {
-                                isUserOwner === false ? 
-                                <Col xs="1" className={mobileClasses.cardheaderphotodiv}><a href={`/profile/${props.credentials ? credentials.username : post.user_id.username}`}><img className={mobileClasses.cardheaderphoto} src={props.credentials ? credentials.profile_photo : post.user_id.profile_photo} alt=""/></a></Col>
-                                :
-                                <Col xs="1" className={mobileClasses.cardheaderphotodiv}><a href={`/profile/${props.credentials ? credentials.username : post.user_id.username}`}><MDBIcon style={{color: 'gold', position: 'absolute', marginLeft: '7px', marginTop: '-5px'}} icon="crown" /><img className={mobileClasses.cardheaderphoto} src={props.credentials ? credentials.profile_photo : post.user_id.profile_photo} alt=""/></a></Col>
-                            }
-                            <Col xs="3" className={mobileClasses.cardheaderusername}><a href={`/profile/${props.credentials ? credentials.username : post.user_id.username}`}><p>{`@${props.credentials ? credentials.username : post.user_id.username}`}</p></a></Col>
-                            <Col xs="4" className={mobileClasses.cardheaderdate}><p>{post.cep_inf.date}</p></Col>
+                        <Row between>
+                            <Col xs="6" style={{marginLeft: '15px'}}>
+                                <Row className={mobileClasses.cardheader}>
+                                    {
+                                        isUserOwner === false ? 
+                                        <Col xs="1" className={mobileClasses.cardheaderphotodiv}><a href={`/profile/${props.credentials ? credentials.username : post.user_id.username}`}><img className={mobileClasses.cardheaderphoto} src={props.credentials ? credentials.profile_photo : post.user_id.profile_photo} alt=""/></a></Col>
+                                        :
+                                        <Col xs="1" className={mobileClasses.cardheaderphotodiv}><a href={`/profile/${props.credentials ? credentials.username : post.user_id.username}`}><MDBIcon style={{color: 'gold', position: 'absolute', marginLeft: '7px', marginTop: '-5px'}} icon="crown" /><img className={mobileClasses.cardheaderphoto} src={props.credentials ? credentials.profile_photo : post.user_id.profile_photo} alt=""/></a></Col>
+                                    }
+                                    <Col xs="3" className={mobileClasses.cardheaderusername}><a href={`/profile/${props.credentials ? credentials.username : post.user_id.username}`}><p>{`@${props.credentials ? credentials.username : post.user_id.username}`}</p></a></Col>
+                                    <Col xs="4" className={mobileClasses.cardheaderdate}><p>{post.cep_inf.date}</p></Col>
+                                </Row>
+                            </Col>
+                            <Col xs="2" style={{color: 'white', marginRight: '20px'}}>
+                                <MDBIcon style={{cursor: 'pointer'}} onClick={() => setIsReportPaneOpen(!isReportPaneOpen)} icon="ellipsis-h" />
+                                {
+                                    isReportPaneOpen === true &&
+                                    <div style={{position: 'absolute', backgroundColor: 'white', zIndex: '1000', borderRadius: '5px', width: '100px', height: '35px', padding: '5px', marginLeft: '-75px'}}>
+                                        <p onClick={() => setReportModal(true)} style={{color: 'black', marginLeft: '5px', cursor: 'pointer'}}>Şikayet Et</p>
+                                    </div>
+                                }
+                            </Col>
                         </Row>
                         <hr className={mobileClasses.cardhr}/>
 
