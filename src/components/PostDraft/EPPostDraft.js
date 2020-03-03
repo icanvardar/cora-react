@@ -121,7 +121,7 @@ const PostDraft = (props) => {
                 <Card className={classes.cardcontainer} style={{ backgroundColor: '#151515' }}>
                     <CardBody>
                         <Row between style={{ marginBottom: '-5px' }}>
-                            <Col md="6">
+                            <Col md="8">
                                 <Row className={classes.cardheader}>
                                     <Col xs="1" className={classes.cardheaderphotodiv}><a href={`/profile/${post.produced_id.username}`}><img className={classes.cardheaderphoto} src={post.produced_id.profile_photo} alt="" /></a></Col>
                                     <Col xs="3" className={classes.cardheaderusername}><a href={`/profile/${post.produced_id.username}`}><p>{`@${post.produced_id.username}`}</p></a></Col>
@@ -179,7 +179,7 @@ const PostDraft = (props) => {
                             <Col xs="4" className={mobileClasses.cardheaderdate}><p>{post.date}</p></Col>
                         </Row> */}
                         <Row between>
-                            <Col xs="6" style={{marginLeft: '15px'}}>
+                            <Col xs="6" style={{marginLeft: '5px'}}>
                                 <Row className={mobileClasses.cardheader}>
                                     <Col xs="1" className={mobileClasses.cardheaderphotodiv}><a href={`/profile/${post.produced_id.username}`}><img className={mobileClasses.cardheaderphoto} src={post.produced_id.profile_photo} alt="" /></a></Col>
                                     <Col xs="3" className={mobileClasses.cardheaderusername}><a href={`/profile/${post.produced_id.username}`}><p>{`@${post.produced_id.username}`}</p></a></Col>

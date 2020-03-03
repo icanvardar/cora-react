@@ -133,7 +133,7 @@ const PostDraft = (props) => {
                 <Card className={classes.cardcontainer} style={{backgroundColor: '#151515'}}>
                     <CardBody>
                         <Row between style={{marginBottom: '-5px'}}>
-                            <Col md="6">
+                            <Col md="8">
                                 <Row className={classes.cardheader}>
                                     {
                                         isUserOwner === false ? 
@@ -195,7 +195,7 @@ const PostDraft = (props) => {
                 <Card className={mobileClasses.cardcontainer} style={{backgroundColor: '#151515'}}>
                     <CardBody>
                         <Row between>
-                            <Col xs="6" style={{marginLeft: '15px'}}>
+                            <Col xs="6" style={{marginLeft: '5px'}}>
                                 <Row className={mobileClasses.cardheader}>
                                     {
                                         isUserOwner === false ? 
