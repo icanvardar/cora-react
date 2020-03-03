@@ -24,10 +24,8 @@ const EditProfileModal = (props) => {
 
     // For image uploading
     const [selectedFile, setSelectedFile] = useState(null);
-    const [imagePreviewUrl, setImagePreviewUrl] = useState(null);
 
-    // For catching the image url
-    const [imageLink, setImageLink] = useState('');
+    const [data, setData] = useState({});
 
     useEffect(() => {
         if (props.isOpen === true) {
@@ -37,68 +35,53 @@ const EditProfileModal = (props) => {
 
     useEffect(() => {
         setUserData({ ...props.userData });
-        console.log(userData);
+        // console.log(userData);
     }, [props.userData])
 
-    const fileChangedHandler = event => {
-        setSelectedFile(event[0]);
-
-        let reader = new FileReader();
-
-        reader.onloadend = () => {
-            setImagePreviewUrl(reader.result);
-        }
-
-        reader.readAsDataURL(event[0])
-    }
-
-    const submitPhoto = async () => {
+    const requestImageUrl = async event => {
         var fd = new FormData();
 
-        fd.append('photo', selectedFile);
+        fd.append('photo', event[0]);
 
         let data = fd;
 
         await axios.post(`${process.env.REACT_APP_CORA_PHOTO_SERVER_URL}`, data)
             .then(res => {
-                console.log(res.data.imageUrl);
-                setImageLink(res.data.imageUrl);
-                console.log(imageLink);
+                setData({ ...data, profile_photo: res.data.imageUrl });
             })
             .catch(err => {
                 console.log(err);
             })
+        
     }
-
-    useEffect(() => {
-        submitPhoto();
-    }, [imagePreviewUrl])
 
     const toggle = () => {
         setIsOpen(!isOpen);
     }
 
     const editProfile = async () => {
-        let data = {};
 
-        if (imageLink.length > 0) {
-            data = { ...data, profile_photo: imageLink}
-        } if (name.length !== 0) {
-            data = { ...data, name: name }
+        if (name.length !== 0) {
+            setData({ ...data, name: name });
         } if (surname.length !== 0) {
-            data = { ...data, surname: surname }
+            setData({ ...data, surname: surname });
         } if (username.length !== 0) {
-            data = { ...data, username: username }
+            setData({ ...data, username: username });
         } if (spotifyUsername.length !== 0) {
-            data = { ...data, spotifyUsername: spotifyUsername }
+            setData({ ...data, spotifyUsername: spotifyUsername });
         } if (instagramUsername.length !== 0) {
-            data = { ...data, instagramUsername: instagramUsername }
+            setData({ ...data, instagramUsername: instagramUsername });
         } if (twitterUsername.length !== 0) {
-            data = { ...data, twitterUsername: twitterUsername }
+            setData({ ...data, twitterUsername: twitterUsername });
         }
 
+        await sendData();
+    }
+
+
+    const sendData = async () => {
         if (data.length !== 0) {
-            update(token, data,
+            await update(token, data,
                 (res) => {
                     console.log(res.data);
                     // history.push('/profile/me');
@@ -108,6 +91,7 @@ const EditProfileModal = (props) => {
                 })
         }
     }
+    
 
     return (
         <Modal isOpen={isOpen}>
@@ -126,7 +110,7 @@ const EditProfileModal = (props) => {
                             <ImageUploader
                                 withIcon={true}
                                 buttonText='Resim Seç'
-                                onChange={(e) => fileChangedHandler(e)}
+                                onChange={(e) => requestImageUrl(e)}
                                 imgExtension={['.jpg', '.gif', '.png', '.gif']}
                                 maxFileSize={5242880}
                                 withPreview={true}
